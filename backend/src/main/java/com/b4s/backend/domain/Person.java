@@ -13,10 +13,9 @@ import javax.persistence.Table;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 @Table(name = "pessoa")
-public class Person {
+public abstract class Person {
 
     @Id
     @Column(name = "cpf")
