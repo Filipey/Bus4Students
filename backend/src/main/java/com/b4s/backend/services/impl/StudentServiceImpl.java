@@ -1,5 +1,6 @@
 package com.b4s.backend.services.impl;
 
+import com.b4s.backend.api.exception.ObjectAlreadyExistsException;
 import com.b4s.backend.api.exception.ObjectNotFoundException;
 import com.b4s.backend.domain.Student;
 import com.b4s.backend.repositories.StudentRepository;
@@ -26,6 +27,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public void create(Student student) {
-        studentRepository.create(student);
+        try {
+            studentRepository.create(student);
+        } catch (Exception e) {
+            throw new ObjectAlreadyExistsException("Student with CPF " +student.getCpf() + " already exists");
+        }
     }
 }
