@@ -22,4 +22,10 @@ public class StudentServiceImpl implements StudentService {
     public Student getStudentByCpf(String cpf) {
         return studentRepository.getStudentByCpf(cpf).orElseThrow(() -> new ObjectNotFoundException("Invalid CPF."));
     }
+
+    @Override
+    @Transactional
+    public void create(Student student) {
+        studentRepository.create(student);
+    }
 }
