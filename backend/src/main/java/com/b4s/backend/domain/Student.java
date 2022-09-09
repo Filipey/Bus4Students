@@ -21,6 +21,6 @@ public class Student extends Person{
     private String cpf;
 
     @Column(name = "comprovante_de_matricula_")
-    private String enrollmentProof;
+    private String enrollment;
 
 }
