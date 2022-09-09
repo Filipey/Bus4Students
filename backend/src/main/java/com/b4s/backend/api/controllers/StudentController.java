@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,5 +28,17 @@ public class StudentController {
     @ResponseStatus(HttpStatus.OK)
     public Student getStudentByCpf(@PathVariable String cpf) {
         return studentService.getStudentByCpf(cpf);
+    }
+
+    @PostMapping
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Student created"),
+            @ApiResponse(code = 400, message = "Authorization Error")
+    })
+    @ResponseStatus(HttpStatus.CREATED)
+    public Student insert(@RequestBody @Validated Student student) {
+        studentService.create(student);
+
+        return studentService.getStudentByCpf(student.getCpf());
     }
 }
