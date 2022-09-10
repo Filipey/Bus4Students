@@ -21,7 +21,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional(readOnly = true)
     public Student getStudentByCpf(String cpf) {
-        return studentRepository.getStudentByCpf(cpf).orElseThrow(() -> new ObjectNotFoundException("Invalid CPF."));
+        return studentRepository.getStudentByCpf(cpf).orElseThrow(() -> new ObjectNotFoundException("Student with CPF " +cpf + " dont exists"));
     }
 
     @Override
@@ -32,5 +32,15 @@ public class StudentServiceImpl implements StudentService {
         } catch (Exception e) {
             throw new ObjectAlreadyExistsException("Student with CPF " +student.getCpf() + " already exists");
         }
+    }
+
+    @Override
+    @Transactional
+    public void delete(String cpf) {
+        studentRepository.getStudentByCpf(cpf)
+                .map(student -> {
+                    studentRepository.delete(cpf);
+                    return student;
+                }).orElseThrow(() -> new ObjectNotFoundException("Student with CPF " + cpf + " dont exists"));
     }
 }

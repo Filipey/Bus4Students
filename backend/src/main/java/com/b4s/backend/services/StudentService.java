@@ -7,4 +7,7 @@ public interface StudentService {
     Student getStudentByCpf(String cpf);
 
     void create(Student student);
+
+    void delete(String cpf);
+
 }
