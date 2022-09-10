@@ -14,18 +14,23 @@ import java.util.List;
 @Table(name = "estudante")
 public class Student extends Person{
 
-    @Id
-    @Column(name = "fk_pessoa_cpf")
-    private String cpf;
-
-    @Column(name = "comprovante_de_matricula_")
+    @Column(name = "comprovante_de_matricula")
     private String enrollment;
-
 
     @ManyToMany
     @JoinTable(name = "frequenta",
-            joinColumns = {@JoinColumn(name = "fk_estudante__fk_pessoa_cpf")},
-            inverseJoinColumns = {@JoinColumn(name = "fk_instituicao_de_ensino__campus")}
+            joinColumns = {@JoinColumn(name = "cpf_estudante")},
+            inverseJoinColumns = {@JoinColumn(name = "campus")}
     )
     private List<School> schools;
+
+    @ManyToMany
+    @JoinTable(name = "utiliza",
+            joinColumns = {@JoinColumn(name = "cpf_estudante")},
+            inverseJoinColumns = {@JoinColumn(name = "placa_onibus")}
+    )
+    private List<Bus> buses;
+
+    @OneToOne(mappedBy = "owner")
+    private StudentPass pass;
 }
