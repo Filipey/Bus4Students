@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -23,4 +21,11 @@ public class Student extends Person{
     @Column(name = "comprovante_de_matricula_")
     private String enrollment;
 
+
+    @ManyToMany
+    @JoinTable(name = "frequenta",
+            joinColumns = {@JoinColumn(name = "fk_estudante__fk_pessoa_cpf")},
+            inverseJoinColumns = {@JoinColumn(name = "fk_instituicao_de_ensino__campus")}
+    )
+    private List<School> schools;
 }
