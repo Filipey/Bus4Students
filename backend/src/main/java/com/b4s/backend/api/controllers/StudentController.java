@@ -41,4 +41,15 @@ public class StudentController {
 
         return studentService.getStudentByCpf(student.getCpf());
     }
+
+    @DeleteMapping("{cpf}")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Student deleted"),
+            @ApiResponse(code = 400, message = "Authorization Error"),
+            @ApiResponse(code = 404, message = "Student not found")
+    })
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable String cpf) {
+        studentService.delete(cpf);
+    }
 }
