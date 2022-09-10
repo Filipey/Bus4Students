@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/student")
 @Api("Students API")
@@ -51,5 +53,16 @@ public class StudentController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable String cpf) {
         studentService.delete(cpf);
+    }
+
+    @GetMapping
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Students found"),
+            @ApiResponse(code = 400, message = "Authorization Error"),
+            @ApiResponse(code = 404, message = "There is no Students")
+    })
+    @ResponseStatus(HttpStatus.OK)
+    public List<Student> getAllStudents() {
+        return studentService.getAllStudents();
     }
 }
