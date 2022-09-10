@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface StudentRepository extends JpaRepository<Student, String> {
@@ -25,4 +26,7 @@ public interface StudentRepository extends JpaRepository<Student, String> {
     )
     @Modifying
     void delete(@Param("cpf") String cpf);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM pessoa p INNER JOIN estudante e on p.cpf = e.fk_pessoa_cpf")
+    List<Student> getAllStudents();
 }
