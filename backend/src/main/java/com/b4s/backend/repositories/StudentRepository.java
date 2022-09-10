@@ -16,6 +16,13 @@ public interface StudentRepository extends JpaRepository<Student, String> {
     @Modifying
     @Query(nativeQuery = true, value =
             "INSERT INTO pessoa(cpf, nome, endereco) VALUES (:#{#student.cpf}, :#{#student.name}, :#{#student.address});" +
-            "INSERT INTO estudante(comprovante_de_matricula_, fk_pessoa_cpf) VALUES(:#{#student.enrollment}, :#{#student.cpf}) ")
+            "INSERT INTO estudante(comprovante_de_matricula_, fk_pessoa_cpf) VALUES(:#{#student.enrollment}, :#{#student.cpf}) "
+    )
     void create(@Param("student") Student student);
+
+    @Query(nativeQuery = true, value =
+            "DELETE FROM pessoa WHERE (cpf = :cpf);" + "DELETE FROM estudante WHERE fk_pessoa_cpf = :cpf"
+    )
+    @Modifying
+    void delete(@Param("cpf") String cpf);
 }
