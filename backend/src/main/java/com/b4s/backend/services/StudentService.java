@@ -2,6 +2,8 @@ package com.b4s.backend.services;
 
 import com.b4s.backend.domain.Student;
 
+import java.util.List;
+
 
 public interface StudentService {
     Student getStudentByCpf(String cpf);
@@ -10,4 +12,5 @@ public interface StudentService {
 
     void delete(String cpf);
 
+    List<Student> getAllStudents();
 }

@@ -8,6 +8,8 @@ import com.b4s.backend.services.StudentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -42,5 +44,10 @@ public class StudentServiceImpl implements StudentService {
                     studentRepository.delete(cpf);
                     return student;
                 }).orElseThrow(() -> new ObjectNotFoundException("Student with CPF " + cpf + " dont exists"));
+    }
+
+    @Override
+    public List<Student> getAllStudents() {
+        return studentRepository.getAllStudents();
     }
 }
