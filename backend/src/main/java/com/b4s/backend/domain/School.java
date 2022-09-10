@@ -17,7 +17,7 @@ public class School {
     @Id
     private String campus;
 
-    @Column(name = "nome_")
+    @Column(name = "nome")
     private String name;
 
     @Column(name = "localizacao")
