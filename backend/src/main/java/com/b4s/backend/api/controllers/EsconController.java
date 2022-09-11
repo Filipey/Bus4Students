@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/escon")
 public class EsconController {
@@ -63,5 +65,16 @@ public class EsconController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable String plate) {
         esconService.delete(plate);
+    }
+
+    @GetMapping
+    @ApiOperation("Get all Escon buses")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Buses received"),
+            @ApiResponse(code = 404, message = "No buses found")
+    })
+    @ResponseStatus(HttpStatus.OK)
+    public List<EsconBus> getAll() {
+        return esconService.getAll();
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface EsconBusRepository extends JpaRepository<EsconBus, String> {
@@ -27,4 +28,8 @@ public interface EsconBusRepository extends JpaRepository<EsconBus, String> {
     @Modifying
     @Query(nativeQuery = true, value = "DELETE FROM onibus WHERE (placa = :plate);" + "DELETE FROM escon WHERE (placa = :plate)")
     void delete(@Param("plate") String plate);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM onibus o INNER JOIN escon e on o.placa = e.placa")
+    List<EsconBus> getAllEsconBuses();
+
 }

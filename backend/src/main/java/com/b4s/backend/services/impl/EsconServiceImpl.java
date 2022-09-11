@@ -8,6 +8,8 @@ import com.b4s.backend.services.EsconService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class EsconServiceImpl implements EsconService {
 
@@ -50,5 +52,11 @@ public class EsconServiceImpl implements EsconService {
             esconBusRepository.delete(plate);
             return bus;
         }).orElseThrow(() -> new ObjectNotFoundException("Bus not found"));
+    }
+
+    @Override
+    @Transactional
+    public List<EsconBus> getAll() {
+        return esconBusRepository.getAllEsconBuses();
     }
 }
