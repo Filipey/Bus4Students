@@ -1,6 +1,7 @@
 package com.b4s.backend.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,6 +31,7 @@ public class Student extends Person{
     )
     private List<Bus> buses;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "owner")
     private StudentPass pass;
 }
