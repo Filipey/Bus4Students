@@ -1,5 +1,6 @@
 package com.b4s.backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,7 @@ public class StudentPass {
     @Column(name = "instituicao_ensino")
     private String schoolName;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "cpf_estudante", referencedColumnName = "cpf")
     private Student owner;
 }

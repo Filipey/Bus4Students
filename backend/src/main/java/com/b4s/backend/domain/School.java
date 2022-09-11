@@ -1,5 +1,6 @@
 package com.b4s.backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class School {
     @Column(name = "periodo_letivo")
     private boolean isActive;
 
-    @ManyToMany(mappedBy = "schools", cascade = CascadeType.ALL)
+    @JsonBackReference
+    @ManyToMany(mappedBy = "schools")
     private List<Student> students;
 }

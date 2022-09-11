@@ -1,5 +1,6 @@
 package com.b4s.backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public abstract class Bus {
     @Column(name = "horario_saida")
     private String departureTime;
 
-    @ManyToMany(mappedBy = "buses", cascade = CascadeType.ALL)
+    @JsonBackReference
+    @ManyToMany(mappedBy = "buses")
     private List<Student> students;
 }
