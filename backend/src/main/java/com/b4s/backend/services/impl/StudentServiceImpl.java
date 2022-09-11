@@ -47,6 +47,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Student> getAllStudents() {
         return studentRepository.getAllStudents();
     }
