@@ -1,5 +1,6 @@
 package com.b4s.backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,6 @@ public abstract class Bus {
     private String departureTime;
 
     @ManyToMany(mappedBy = "buses")
+    @JsonIgnore
     private List<Student> students;
 }
