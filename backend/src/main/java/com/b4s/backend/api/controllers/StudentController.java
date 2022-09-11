@@ -5,6 +5,7 @@ import com.b4s.backend.services.StudentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +18,11 @@ import java.util.List;
 public class StudentController {
 
     private final StudentService studentService;
+    private final ModelMapper modelMapper;
 
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, ModelMapper modelMapper) {
         this.studentService = studentService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/{cpf}")
