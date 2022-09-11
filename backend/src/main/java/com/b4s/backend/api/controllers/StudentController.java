@@ -22,7 +22,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("{cpf}")
+    @GetMapping("/{cpf}")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Student found"),
             @ApiResponse(code = 404, message = "Student not found")
@@ -44,7 +44,7 @@ public class StudentController {
         return studentService.getStudentByCpf(student.getCpf());
     }
 
-    @DeleteMapping("{cpf}")
+    @DeleteMapping("/{cpf}")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Student deleted"),
             @ApiResponse(code = 400, message = "Authorization Error"),
