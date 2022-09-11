@@ -1,5 +1,6 @@
 package com.b4s.backend.repositories;
 
+import com.b4s.backend.domain.Bus;
 import com.b4s.backend.domain.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -29,4 +30,9 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM pessoa p INNER JOIN estudante e on p.cpf = e.cpf")
     List<Student> getAllStudents();
+
+    @Query(nativeQuery = true, value = "INSERT INTO utiliza(placa_onibus, cpf_estudante) VALUES(:busPlate, :studentCpf)")
+    @Modifying
+    void delegateNewBus(@Param("studentCpf")String studentCpf, @Param("busPlate") String busPlate);
+
 }

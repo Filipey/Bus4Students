@@ -13,4 +13,6 @@ public interface StudentService {
     void delete(String cpf);
 
     List<Student> getAllStudents();
+
+    void delegateNewBus(String studentCpf, String busPlate);
 }
