@@ -1,9 +1,9 @@
 package com.b4s.backend.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "onibus")
 @Inheritance(strategy = InheritanceType.JOINED)
+@Transactional
 public abstract class Bus {
 
     @Id
@@ -23,7 +24,6 @@ public abstract class Bus {
     @Column(name = "horario_saida")
     private String departureTime;
 
-    @JsonBackReference
     @ManyToMany(mappedBy = "buses")
     private List<Student> students;
 }
