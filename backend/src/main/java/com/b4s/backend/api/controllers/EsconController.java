@@ -50,7 +50,7 @@ public class EsconController {
             @ApiResponse(code = 201, message = "Bus updated"),
             @ApiResponse(code = 400, message = "Authorization error")
     })
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable String plate, @RequestBody @Validated int line) {
         esconService.updateLine(plate, line);
     }
