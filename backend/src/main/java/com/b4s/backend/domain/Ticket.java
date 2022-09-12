@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 
@@ -18,9 +15,11 @@ import java.sql.Date;
 @Table(name = "vale_transporte")
 public class Ticket {
 
-    @Column(name = "id")
+    @Column(name = "id", columnDefinition = "serial")
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vale_transporte_id")
+    @SequenceGenerator(name = "vale_transporte_id", sequenceName = "vale_transporte_id", allocationSize = 1)
+    private int id;
 
     @Column(name = "data_de_validade")
     private Date expirationDate;
