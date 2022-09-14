@@ -11,7 +11,10 @@ import java.util.Optional;
 
 public interface EsconBusRepository extends JpaRepository<EsconBus, String> {
 
-    @Query(nativeQuery = true, value = "SELECT * FROM onibus o INNER JOIN escon e on o.placa = :plate and e.placa = :plate")
+    @Query(nativeQuery = true, value =
+            "SELECT o.placa, o.horario_saida, e.linha " +
+            "FROM onibus o, escon e " +
+            "WHERE o.placa = :plate")
     Optional<EsconBus> getEsconBusByPlate(@Param("plate") String plate);
 
     @Modifying
@@ -29,7 +32,11 @@ public interface EsconBusRepository extends JpaRepository<EsconBus, String> {
     @Query(nativeQuery = true, value = "DELETE FROM onibus WHERE (placa = :plate);" + "DELETE FROM escon WHERE (placa = :plate)")
     void delete(@Param("plate") String plate);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM onibus o INNER JOIN escon e on o.placa = e.placa")
+    @Query(nativeQuery = true, value = "" +
+            "SELECT o.placa, o.horario_saida, e.linha" +
+            "FROM onibus o, escon e" +
+            "WHERE o.placa = e.placa" +
+            "ORDER BY o.placa")
     List<EsconBus> getAllEsconBuses();
 
 }
