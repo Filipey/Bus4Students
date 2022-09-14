@@ -25,6 +25,6 @@ public class StudentPass {
     private String schoolName;
 
     @OneToOne
-    @JoinColumn(name = "cpf_estudante", referencedColumnName = "cpf")
+    @JoinColumn(name = "cpf", referencedColumnName = "cpf")
     private Student owner;
 }

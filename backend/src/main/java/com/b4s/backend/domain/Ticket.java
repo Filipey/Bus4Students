@@ -1,5 +1,6 @@
 package com.b4s.backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -33,6 +35,8 @@ public class Ticket {
     @Column(name = "destino")
     private String sink;
 
-
+    @ManyToMany(mappedBy = "tickets")
+    @JsonIgnore
+    private List<Student> students;
 
 }

@@ -19,17 +19,25 @@ public class Student extends Person{
 
     @ManyToMany
     @JoinTable(name = "frequenta",
-            joinColumns = {@JoinColumn(name = "cpf_estudante")},
+            joinColumns = {@JoinColumn(name = "cpf")},
             inverseJoinColumns = {@JoinColumn(name = "campus")}
     )
     private List<School> schools;
 
     @ManyToMany
     @JoinTable(name = "utiliza",
-            joinColumns = {@JoinColumn(name = "cpf_estudante")},
-            inverseJoinColumns = {@JoinColumn(name = "placa_onibus")}
+            joinColumns = {@JoinColumn(name = "cpf")},
+            inverseJoinColumns = {@JoinColumn(name = "placa")}
     )
     private List<Bus> buses;
+
+    @ManyToMany
+    @JsonIgnore
+    @JoinTable(name = "recebe",
+        joinColumns = {@JoinColumn(name = "cpf")},
+            inverseJoinColumns = {@JoinColumn(name = "id")}
+    )
+    private List<Ticket> tickets;
 
     @JsonIgnore
     @OneToOne(mappedBy = "owner")

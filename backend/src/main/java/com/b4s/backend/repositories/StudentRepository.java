@@ -31,7 +31,7 @@ public interface StudentRepository extends JpaRepository<Student, String> {
     @Query(nativeQuery = true, value = "SELECT * FROM pessoa p INNER JOIN estudante e on p.cpf = e.cpf")
     List<Student> getAllStudents();
 
-    @Query(nativeQuery = true, value = "INSERT INTO utiliza(placa_onibus, cpf_estudante) VALUES(:busPlate, :studentCpf)")
+    @Query(nativeQuery = true, value = "INSERT INTO utiliza(placa, cpf) VALUES(:busPlate, :studentCpf)")
     @Modifying
     void delegateNewBus(@Param("studentCpf")String studentCpf, @Param("busPlate") String busPlate);
 
