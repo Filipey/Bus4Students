@@ -2,9 +2,6 @@ package com.b4s.backend.services.impl;
 
 import com.b4s.backend.api.exception.ObjectAlreadyExistsException;
 import com.b4s.backend.api.exception.ObjectNotFoundException;
-import com.b4s.backend.domain.Bus;
-import com.b4s.backend.domain.EsconBus;
-import com.b4s.backend.domain.HallBus;
 import com.b4s.backend.domain.Student;
 import com.b4s.backend.repositories.EsconBusRepository;
 import com.b4s.backend.repositories.HallBusRepository;
@@ -13,6 +10,8 @@ import com.b4s.backend.services.StudentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
+import org.postgresql.util.PSQLException;
 import java.util.List;
 
 @Service
@@ -32,7 +31,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional(readOnly = true)
     public Student getStudentByCpf(String cpf) {
-        return studentRepository.getStudentByCpf(cpf).orElseThrow(() -> new ObjectNotFoundException("Student with CPF " +cpf + " dont exists"));
+        try {
+            return studentRepository.getStudentByCpf(cpf).get();
+        } catch (PSQLException e) {
+            throw new ObjectAlreadyExistsException(e.getMessage());
+        }
     }
 
     @Override
@@ -40,19 +43,20 @@ public class StudentServiceImpl implements StudentService {
     public void create(Student student) {
         try {
             studentRepository.create(student);
-        } catch (Exception e) {
-            throw new ObjectAlreadyExistsException("Student with CPF " +student.getCpf() + " already exists");
+        } catch (PSQLException e) {
+            throw new ObjectAlreadyExistsException(e.getMessage());
         }
     }
 
     @Override
     @Transactional
     public void delete(String cpf) {
-        studentRepository.getStudentByCpf(cpf)
-                .map(student -> {
-                    studentRepository.delete(cpf);
-                    return student;
-                }).orElseThrow(() -> new ObjectNotFoundException("Student with CPF " + cpf + " dont exists"));
+        try {
+            Student student = studentRepository.getStudentByCpf(cpf).get();
+            studentRepository.delete(student.getCpf());
+        } catch (PSQLException e) {
+            throw new ObjectNotFoundException(e.getMessage());
+        }
     }
 
     @Override
@@ -66,7 +70,9 @@ public class StudentServiceImpl implements StudentService {
     public void delegateNewBus(String cpf, String plate) {
         try {
             studentRepository.delegateNewBus(cpf, plate);
-        } catch (Exception e) {
+            throw new SQLException();
+        } catch (SQLException e) {
+            e.getCause();
             throw new ObjectAlreadyExistsException("Bus with plate " +plate+ " not found");
         }
 
