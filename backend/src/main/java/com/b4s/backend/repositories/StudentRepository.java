@@ -12,13 +12,18 @@ import java.util.Optional;
 
 public interface StudentRepository extends JpaRepository<Student, String>{
 
-    @Query(nativeQuery = true, value = "SELECT * FROM pessoa p INNER JOIN estudante e on p.cpf = :cpf AND e.cpf = :cpf")
+    @Query(nativeQuery = true, value = "" +
+            "SELECT p.cpf, p.nome, p.endereco, e.comprovante_de_matricula" +
+            "FROM pessoa p, estudante e, " +
+            "WHERE p.cpf = :cpf ")
     Optional<Student> getStudentByCpf(@Param("cpf") String cpf) throws PSQLException;
 
     @Modifying
     @Query(nativeQuery = true, value =
-            "INSERT INTO pessoa(cpf, nome, endereco) VALUES (:#{#student.cpf}, :#{#student.name}, :#{#student.address});" +
-            "INSERT INTO estudante(comprovante_de_matricula, cpf) VALUES(:#{#student.enrollment}, :#{#student.cpf}) "
+            "INSERT INTO pessoa(cpf, nome, endereco) " +
+                    "VALUES (:#{#student.cpf}, :#{#student.name}, :#{#student.address});" +
+            "INSERT INTO estudante(comprovante_de_matricula, cpf) " +
+                    "VALUES(:#{#student.enrollment}, :#{#student.cpf}) "
     )
     void create(@Param("student") Student student) throws PSQLException;
 
@@ -28,7 +33,11 @@ public interface StudentRepository extends JpaRepository<Student, String>{
     @Modifying
     void delete(@Param("cpf") String cpf) throws PSQLException;
 
-    @Query(nativeQuery = true, value = "SELECT * FROM pessoa p INNER JOIN estudante e on p.cpf = e.cpf")
+    @Query(nativeQuery = true, value = "" +
+            "SELECT p.cpf, p.nome, p.endereco, e.comprovante_de_matricula" +
+            " FROM pessoa p, estudante e" +
+            " WHERE p.cpf = e.cpf" +
+            "ORDER BY p.nome")
     List<Student> getAllStudents();
 
     @Query(nativeQuery = true, value = "INSERT INTO utiliza(placa, cpf) VALUES(:busPlate, :studentCpf)")
