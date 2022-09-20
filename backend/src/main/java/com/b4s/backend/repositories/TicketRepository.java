@@ -38,4 +38,10 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "WHERE vt.id NOT IN  (SELECT id FROM recebe) " +
             "ORDER BY vt.id")
     List<Ticket> getAllDisponibleTickets();
+
+    @Query(nativeQuery = true, value =
+            "INSERT INTO recebe(cpf, id) " +
+            "VALUES (:studentCpf, :id)")
+    @Modifying
+    void delegateTicket(@Param("studentCpf") String studentCpf, @Param("id") int id);
 }

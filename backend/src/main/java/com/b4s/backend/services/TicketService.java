@@ -14,5 +14,7 @@ public interface TicketService {
 
     void delete(int id);
 
+    void delegateTicket(String studentCpf, int id);
+
     List<Ticket> getAllDisponibleTickets();
 }

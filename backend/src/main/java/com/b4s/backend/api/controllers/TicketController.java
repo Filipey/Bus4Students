@@ -77,4 +77,14 @@ public class TicketController {
         ticketService.delete(id);
     }
 
+    @PostMapping("/{id}")
+    @ApiOperation("Delegate a Ticket to a Student")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 400, message = "Authorization Error")
+    })
+    public void delegateTicket(@RequestBody String studentCpf, @PathVariable int id) {
+        ticketService.delegateTicket(studentCpf, id);
+    }
+
 }

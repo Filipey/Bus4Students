@@ -51,4 +51,10 @@ public class TicketServiceImpl implements TicketService {
             return ticket;
         }).orElseThrow(() -> new ObjectNotFoundException("Ticket with id " +id+ " not found"));
     }
+
+    @Override
+    @Transactional
+    public void delegateTicket(String studentCpf, int id) {
+        ticketRepository.delegateTicket(studentCpf, id);
+    }
 }
