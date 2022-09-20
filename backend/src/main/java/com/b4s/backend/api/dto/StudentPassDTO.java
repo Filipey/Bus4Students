@@ -1,16 +1,18 @@
 package com.b4s.backend.api.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentDTO {
+public class StudentPassDTO {
 
-    private String name;
-    private String cpf;
-    private String enrollment;
-
+    private Date expirationDate;
+    private String schoolName;
+    private String studentCpf;
 }

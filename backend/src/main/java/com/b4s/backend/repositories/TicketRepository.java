@@ -32,6 +32,18 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     @Query(nativeQuery = true, value = "DELETE FROM vale_transporte WHERE id = :id")
     void delete(@Param("id") int id);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM vale_transporte WHERE placa_escon IS NULL ")
+    @Query(nativeQuery = true, value =
+            "SELECT * " +
+            "FROM vale_transporte vt " +
+            "WHERE vt.id NOT IN  (SELECT id FROM recebe) " +
+            "ORDER BY vt.id")
     List<Ticket> getAllDisponibleTickets();
+
+    @Query(nativeQuery = true, value =
+            "INSERT INTO recebe(cpf, id) " +
+            "VALUES (:studentCpf, :id); " +
+                    "INSERT INTO distribui(cpf, id) " +
+                    "VALUES (:admCpf, :id)")
+    @Modifying
+    void delegateTicket(@Param("studentCpf") String studentCpf, @Param("admCpf") String admCpf, @Param("id") int id);
 }
