@@ -41,7 +41,9 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     @Query(nativeQuery = true, value =
             "INSERT INTO recebe(cpf, id) " +
-            "VALUES (:studentCpf, :id)")
+            "VALUES (:studentCpf, :id); " +
+                    "INSERT INTO distribui(cpf, id) " +
+                    "VALUES (:admCpf, :id)")
     @Modifying
-    void delegateTicket(@Param("studentCpf") String studentCpf, @Param("id") int id);
+    void delegateTicket(@Param("studentCpf") String studentCpf, @Param("admCpf") String admCpf, @Param("id") int id);
 }

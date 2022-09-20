@@ -54,7 +54,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     @Transactional
-    public void delegateTicket(String studentCpf, int id) {
-        ticketRepository.delegateTicket(studentCpf, id);
+    public void delegateTicket(String studentCpf, String admCpf, int id) {
+        ticketRepository.delegateTicket(studentCpf, admCpf, id);
     }
 }

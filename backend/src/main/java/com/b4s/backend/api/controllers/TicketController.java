@@ -77,14 +77,14 @@ public class TicketController {
         ticketService.delete(id);
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{admCpf}/{id}")
     @ApiOperation("Delegate a Ticket to a Student")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 400, message = "Authorization Error")
     })
-    public void delegateTicket(@RequestBody String studentCpf, @PathVariable int id) {
-        ticketService.delegateTicket(studentCpf, id);
+    public void delegateTicket(@RequestBody String studentCpf, @PathVariable String admCpf, @PathVariable int id) {
+        ticketService.delegateTicket(studentCpf, admCpf, id);
     }
 
 }
