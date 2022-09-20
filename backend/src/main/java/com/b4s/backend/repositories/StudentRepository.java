@@ -13,9 +13,9 @@ import java.util.Optional;
 public interface StudentRepository extends JpaRepository<Student, String>{
 
     @Query(nativeQuery = true, value = "" +
-            "SELECT p.cpf, p.nome, p.endereco, e.comprovante_de_matricula" +
-            "FROM pessoa p, estudante e, " +
-            "WHERE p.cpf = :cpf ")
+            "SELECT p.cpf, p.nome, p.endereco, e.comprovante_de_matricula " +
+            "FROM pessoa p, estudante e " +
+            "WHERE p.cpf = :cpf AND e.cpf = :cpf")
     Optional<Student> getStudentByCpf(@Param("cpf") String cpf) throws PSQLException;
 
     @Modifying
@@ -34,9 +34,9 @@ public interface StudentRepository extends JpaRepository<Student, String>{
     void delete(@Param("cpf") String cpf) throws PSQLException;
 
     @Query(nativeQuery = true, value = "" +
-            "SELECT p.cpf, p.nome, p.endereco, e.comprovante_de_matricula" +
-            " FROM pessoa p, estudante e" +
-            " WHERE p.cpf = e.cpf" +
+            "SELECT p.cpf, p.nome, p.endereco, e.comprovante_de_matricula " +
+            "FROM pessoa p, estudante e " +
+            "WHERE p.cpf = e.cpf " +
             "ORDER BY p.nome")
     List<Student> getAllStudents();
 
