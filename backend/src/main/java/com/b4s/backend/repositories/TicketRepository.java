@@ -33,9 +33,9 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     void delete(@Param("id") int id);
 
     @Query(nativeQuery = true, value =
-            "SELECT vt.data_de_validade, vt.valor, vt.id, vt.origem, vt.origem " +
-            "FROM vale_transporte vt, recebe r " +
-            "WHERE vt.id != r.id" +
+            "SELECT * " +
+            "FROM vale_transporte vt " +
+            "WHERE vt.id NOT IN  (SELECT id FROM recebe) " +
             "ORDER BY vt.id")
     List<Ticket> getAllDisponibleTickets();
 }
