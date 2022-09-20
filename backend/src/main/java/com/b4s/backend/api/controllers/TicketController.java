@@ -83,6 +83,7 @@ public class TicketController {
             @ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 400, message = "Authorization Error")
     })
+    @ResponseStatus(HttpStatus.CREATED)
     public void delegateTicket(@RequestBody String studentCpf, @PathVariable String admCpf, @PathVariable int id) {
         ticketService.delegateTicket(studentCpf, admCpf, id);
     }

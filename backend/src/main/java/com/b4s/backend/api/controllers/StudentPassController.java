@@ -75,6 +75,7 @@ public class StudentPassController {
             @ApiResponse(code = 204, message = "Updated"),
             @ApiResponse(code = 400, message = "Authorization Error")
     })
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody StudentPassDTO studentPassDTO, @PathVariable Long id) {
         studentPassServiceImpl.update(studentPassDTO, id);
     }
