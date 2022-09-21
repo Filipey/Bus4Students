@@ -8,15 +8,7 @@ function App() {
   return (
     <BrowserRouter>
       <GlobalStyled />
-      <header>
-
-      </header>
-      <body>
-        <Router />
-      </body>
-      <footer>
-
-      </footer>
+      <Router />
     </BrowserRouter>
   )
 }

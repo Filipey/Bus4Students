@@ -1,19 +1,10 @@
-import HeaderUser from "../../components/HeaderUser"
+import * as S from './style'
+import { ContainerUser } from "../../components/ContainerUser"
 
 export default function User() {
     return (
-        <>
-            <header>
-                <HeaderUser page="Pagina Inicial - Usúario" />
-            </header>
-
-            <body>
-
-            </body>
-
-            <footer>
-
-            </footer>
-        </>
+        <S.Container>
+            <ContainerUser />
+        </S.Container>
     )
 }

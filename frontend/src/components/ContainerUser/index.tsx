@@ -1,9 +1,10 @@
 import * as S from './style';
+import HeaderUser from '../HeaderUser';
 
 export function ContainerUser() {
     return (
-        <>
-            <h1>Container User</h1>
-        </>
+        <S.Container>
+            <HeaderUser page='Usuario: X' />
+        </S.Container>
     );
 }

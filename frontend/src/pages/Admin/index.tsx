@@ -6,17 +6,7 @@ import * as S from './style';
 export default function Admin() {
     return (
         <S.Container>
-            <header>
-                <HeaderAdmin page='Página Inicial - Administrador' />
-            </header>
-
-            <body>
-                <ContainerAdmin />
-            </body>
-
-            <footer>
-
-            </footer>
+            <ContainerAdmin />
         </S.Container>
     )
 }
