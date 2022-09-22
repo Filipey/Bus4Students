@@ -30,4 +30,5 @@ public class School {
     @JsonBackReference
     @ManyToMany(mappedBy = "schools")
     private List<Student> students;
+
 }
