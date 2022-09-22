@@ -1,5 +1,6 @@
 package com.b4s.backend.api.controllers;
 
+import com.b4s.backend.api.dto.StudentDTO;
 import com.b4s.backend.domain.Student;
 import com.b4s.backend.services.StudentService;
 import io.swagger.annotations.Api;
@@ -35,6 +36,14 @@ public class StudentController {
     @ResponseStatus(HttpStatus.OK)
     public Student getStudentByCpf(@PathVariable String cpf) {
         return studentService.getStudentByCpf(cpf);
+    }
+
+    @GetMapping("/total")
+    @ApiOperation("Get the total of Students")
+    @ApiResponse(code = 200, message = "Ok")
+    @ResponseStatus(HttpStatus.OK)
+    public Long getTotalStudents() {
+        return studentService.getTotalStudents();
     }
 
     @PostMapping
@@ -84,5 +93,17 @@ public class StudentController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delegateNewBus(@PathVariable String cpf, @RequestBody String plate) {
         studentService.delegateNewBus(cpf, plate);
+    }
+
+    @PutMapping("/{cpf}")
+    @ApiOperation("Update a Student")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Updated"),
+            @ApiResponse(code = 400, message = "Authorization Error"),
+            @ApiResponse(code = 404, message = "Student not found")
+    })
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@PathVariable String cpf, @RequestBody StudentDTO dto) {
+        studentService.update(dto, cpf);
     }
 }

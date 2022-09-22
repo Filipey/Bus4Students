@@ -1,8 +1,11 @@
 package com.b4s.backend.domain;
 
 
+import com.b4s.backend.domain.enums.UserRoles;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -42,4 +45,7 @@ public class Student extends Person{
     @JsonIgnore
     @OneToOne(mappedBy = "owner")
     private StudentPass pass;
+
+    @Transient
+    private UserRoles role = UserRoles.STUDENT;
 }

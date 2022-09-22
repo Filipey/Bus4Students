@@ -4,14 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentDTO {
+@Data
+public class UserDTO {
 
     private String cpf;
-    private String name;
-    private String address;
-    private String enrollment;
-
+    private String password;
 }
