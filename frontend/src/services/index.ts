@@ -1,1 +1,1 @@
-export * from './RequestsService'
+export * from './StudentService'
