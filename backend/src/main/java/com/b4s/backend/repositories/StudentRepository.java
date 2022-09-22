@@ -1,5 +1,6 @@
 package com.b4s.backend.repositories;
 
+import com.b4s.backend.api.dto.StudentDTO;
 import com.b4s.backend.domain.Student;
 import org.postgresql.util.PSQLException;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,6 +18,9 @@ public interface StudentRepository extends JpaRepository<Student, String>{
             "FROM pessoa p, estudante e " +
             "WHERE p.cpf = :cpf AND e.cpf = :cpf")
     Optional<Student> getStudentByCpf(@Param("cpf") String cpf) throws PSQLException;
+
+    @Query(nativeQuery = true, value = "SELECT COUNT(*) FROM pessoa p, estudante e WHERE p.cpf = e.cpf")
+    Long getTotalStundents();
 
     @Modifying
     @Query(nativeQuery = true, value =
@@ -39,6 +43,21 @@ public interface StudentRepository extends JpaRepository<Student, String>{
             "WHERE p.cpf = e.cpf " +
             "ORDER BY p.nome")
     List<Student> getAllStudents();
+
+    @Query(nativeQuery = true, value =
+            "UPDATE pessoa " +
+            "SET " +
+                    "cpf = :#{#student.cpf}, " +
+                    "nome = :#{#student.name}, " +
+                    "endereco = :#{#student.address} " +
+                    "WHERE cpf = :cpf ;" +
+                    "UPDATE estudante " +
+                    "SET " +
+                    "comprovante_de_matricula = :#{#student.enrollment} " +
+                    "WHERE cpf = :cpf"
+                    )
+    @Modifying
+    void update(@Param("student") StudentDTO student, @Param("cpf") String cpf);
 
     @Query(nativeQuery = true, value = "INSERT INTO utiliza(placa, cpf) VALUES(:busPlate, :studentCpf)")
     @Modifying

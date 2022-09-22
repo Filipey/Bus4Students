@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StudentDTO {
 
-    private String name;
     private String cpf;
+    private String name;
+    private String address;
     private String enrollment;
 
 }
