@@ -1,10 +1,5 @@
-import * as S from './style'
-import { ContainerUser } from "../../components/ContainerUser"
+import { DashboardContainer } from '../../components/DashboardContainer'
 
 export default function User() {
-    return (
-        <S.Container>
-            <ContainerUser />
-        </S.Container>
-    )
+  return <DashboardContainer />
 }

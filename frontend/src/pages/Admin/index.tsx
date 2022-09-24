@@ -1,12 +1,5 @@
-import HeaderAdmin from '../../components/HeaderAdmin'
-import { ContainerAdmin } from '../../components/ContainerAdmin'
-
-import * as S from './style';
+import { DashboardContainer } from '../../components/DashboardContainer'
 
 export default function Admin() {
-    return (
-        <S.Container>
-            <ContainerAdmin />
-        </S.Container>
-    )
+  return <DashboardContainer />
 }
