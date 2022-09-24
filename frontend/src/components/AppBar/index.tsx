@@ -72,10 +72,10 @@ export function AppBar({ open, toggleDrawer }: AppBarProps) {
           {'Bem vindo, ' + user.name}
         </Typography>
         <IconButton>
-          <Person />
+          <Person htmlColor="#FFFFFF" />
         </IconButton>
         <IconButton onClick={handleLogout}>
-          <Logout />
+          <Logout htmlColor="#FFFFFF" />
         </IconButton>
       </Toolbar>
     </AppBarSetup>
