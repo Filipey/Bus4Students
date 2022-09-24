@@ -1,25 +1,34 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { StudentService } from '../../services/StudentService'
 import * as S from './style'
 
 import Bus from '../../img/onibusExemplo.jpeg'
 
 export default function Home() {
+  const [totalStudents, setTotalStudents] = useState(0)
+  const navigate = useNavigate()
 
-    const [totalStudents, setTotalStudents] = useState<number>(0)
+  const handleGoToLogin = () => navigate('/login')
+  const handleGoToRegister = () => navigate('/register')
 
-    return (
+  useEffect(() => {
+    StudentService.getTotalStudents().then(res => {
+      setTotalStudents(res.data)
+    })
+  }, [])
 
-        <S.Container>
-            <S.Title>Bus4Student</S.Title>
-            <S.TitleDescription>Atendendo um total de {totalStudents} estudantes!</S.TitleDescription>
-            <S.BusImg src={Bus} />
-            <S.ContainerButton>
-                <a href="/login">Entrar</a>
-                <a href="/register">Registrar</a>
-                <a href="/user">Usuario</a>
-                <a href="/admin">Administrador</a>
-            </S.ContainerButton>
-
-        </S.Container>
-    )
+  return (
+    <S.Container>
+      <S.Title>Bus4Students</S.Title>
+      <S.TitleDescription>
+        Atendendo um total de {totalStudents} estudantes!
+      </S.TitleDescription>
+      <S.BusImg src={Bus} />
+      <S.ContainerButton>
+        <a onClick={handleGoToLogin}>Entrar</a>
+        <a onClick={handleGoToRegister}>Registrar</a>
+      </S.ContainerButton>
+    </S.Container>
+  )
 }

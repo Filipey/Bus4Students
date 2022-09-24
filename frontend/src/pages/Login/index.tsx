@@ -1,9 +1,5 @@
-import LoginContainer from "../../components/LoginContainer"
+import LoginContainer from '../../components/LoginContainer'
 
 export default function Login() {
-
-    return (
-        <LoginContainer />
-
-    )
+  return <LoginContainer />
 }
