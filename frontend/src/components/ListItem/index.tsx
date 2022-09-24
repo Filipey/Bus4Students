@@ -1,11 +1,7 @@
 import { List, ListItemText } from '@material-ui/core'
-import {
-  AirportShuttle,
-  ConfirmationNumber,
-  CreditCard,
-  Dashboard
-} from '@material-ui/icons'
+import { Dashboard, DirectionsBus, School, Subtitles } from '@material-ui/icons'
 import { Person2 } from '@mui/icons-material'
+import BadgeIcon from '@mui/icons-material/Badge'
 import { ListItem, ListItemButton, ListItemIcon } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
@@ -21,12 +17,10 @@ function MyListItem({ icon, url, iconText }: MyListItemProps) {
 
   return (
     <ListItem onClick={handleNavigate}>
-      <ListItemIcon>
-        <ListItemButton>
-          {icon}
-          <ListItemText primary={iconText} />
-        </ListItemButton>
-      </ListItemIcon>
+      <ListItemButton>
+        <ListItemIcon>{icon}</ListItemIcon>
+        <ListItemText primary={iconText} />
+      </ListItemButton>
     </ListItem>
   )
 }
@@ -36,18 +30,15 @@ interface DrawerListItemProps {
 }
 
 export function DrawerListItem({ urls }: DrawerListItemProps) {
-  const [dashboard, bus, school, ticket, person] = urls
+  const [dashboard, bus, school, ticket, pass, person] = urls
 
   return (
     <List>
       <MyListItem icon={<Dashboard />} url={dashboard} iconText="Dashboard" />
-      <MyListItem icon={<AirportShuttle />} url={bus} iconText="Onibus" />
-      <MyListItem icon={<CreditCard />} url={school} iconText="Escolas" />
-      <MyListItem
-        icon={<ConfirmationNumber />}
-        url={ticket}
-        iconText="Tickets"
-      />
+      <MyListItem icon={<DirectionsBus />} url={bus} iconText="Onibus" />
+      <MyListItem icon={<School />} url={school} iconText="Escolas" />
+      <MyListItem icon={<Subtitles />} url={ticket} iconText="Tickets" />
+      <MyListItem icon={<BadgeIcon />} url={pass} iconText="Carteira" />
       <MyListItem icon={<Person2 />} url={person} iconText="Estudante" />
     </List>
   )
