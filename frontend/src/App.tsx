@@ -1,10 +1,9 @@
-import GlobalStyled from "./styles/global"
-import { BrowserRouter } from "react-router-dom"
+import { BrowserRouter } from 'react-router-dom'
+import GlobalStyled from './styles/global'
 
-import { Router } from "./router"
+import { Router } from './router'
 
 function App() {
-
   return (
     <BrowserRouter>
       <GlobalStyled />
