@@ -98,7 +98,7 @@ export default function LoginContainer() {
         </Button>
 
         <S.InfoContainer>
-          <S.Info href="/register">Cadastrar</S.Info>
+          <S.Info onClick={() => navigate('/register')}>Cadastrar</S.Info>
         </S.InfoContainer>
       </S.Form>
     </S.Container>
