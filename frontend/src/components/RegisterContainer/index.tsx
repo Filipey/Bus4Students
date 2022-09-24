@@ -1,47 +1,71 @@
-import { FormLabel } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Radio from '@material-ui/core/Radio'
-import RadioGroup from '@material-ui/core/RadioGroup'
 import TextField from '@material-ui/core/TextField'
-import { SetStateAction, useEffect, useState } from 'react'
+import { Typography } from '@mui/material'
+import { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import UserContext from '../../hooks/userContext'
 import Bus from '../../img/onibusExemplo.jpeg'
+import { StudentDTO } from '../../schemas'
+import { StudentService } from '../../services/StudentService'
+import { UserService } from '../../services/UserService'
 import * as S from './style'
 
 export default function Register() {
-  const [password, setPassword] = useState<string>(' ')
-  const [cpf, setCpf] = useState<string>(' ')
-  const [nome, setNome] = useState<string>(' ')
-  const [passwordConfirm, setPasswordConfirm] = useState<string>(' ')
-  const [passwordAux, setPasswordAux] = useState<boolean>()
-  const [value, setValue] = useState<string>('usuario')
-  const [error, setError] = useState<string>(' ')
+  const navigate = useNavigate()
+  const { user, setUser } = useContext(UserContext)
 
-  function validatePassword() {
-    if (password != passwordConfirm) {
-      setError('As senhas não conferem!')
-      setPasswordAux(false)
-    } else {
-      setError(' ')
-      setPasswordAux(true)
+  const [student, setStudent] = useState<StudentDTO | null>(null)
+  const [password, setPassword] = useState('')
+  const [cpf, setCpf] = useState('')
+  const [name, setName] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState(' ')
+  const [address, setAddress] = useState('')
+  const [enrollment, setEnrollment] = useState('')
+  const [error, setError] = useState(false)
+  const [invalidData, setInvalidData] = useState(false)
+  const [finish, setFinish] = useState(false)
+
+  const handleRegister = async () => {
+    await StudentService.insertNewStudent(student!)
+      .then(res => {
+        if (res.status === 201) {
+          UserService.insertNewUser({ cpf, password, isAdmin: false })
+          UserService.validateLogin({ cpf, password }).then(res => {
+            setUser({
+              name: res.data.name,
+              address: res.data.address,
+              cpf: res.data.cpf,
+              role: res.data.role
+            })
+          })
+        }
+      })
+      .catch(() => setInvalidData(true))
+    setFinish(true)
+  }
+
+  const validateRegister = () => {
+    if (student === null) {
+      setError(true)
+      return
     }
+    if (password !== passwordConfirm) {
+      setError(true)
+      return
+    }
+
+    handleRegister()
   }
 
   useEffect(() => {
-    validatePassword()
-  }, [passwordConfirm, password])
-
-  const handleChange = (event: {
-    target: { value: SetStateAction<string> }
-  }) => {
-    setValue(event.target.value)
-  }
+    setStudent({ cpf, name, address, enrollment })
+  }, [name, cpf, password])
 
   return (
     <S.Container>
       <S.BusImg src={Bus} />
       <S.Form>
-        <S.TitleLogin>Cadastrar</S.TitleLogin>
+        <S.TitleLogin>Estudante</S.TitleLogin>
         <TextField
           variant="outlined"
           margin="normal"
@@ -49,9 +73,9 @@ export default function Register() {
           fullWidth
           id="name"
           label="Nome"
-          name="email"
+          name="name"
           autoFocus
-          onChange={e => setNome(e.target.value)}
+          onChange={e => setName(e.target.value)}
         />
         <TextField
           variant="outlined"
@@ -60,8 +84,28 @@ export default function Register() {
           fullWidth
           id="cpf"
           label="CPF"
-          name="email"
+          name="cpf"
           onChange={e => setCpf(e.target.value)}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="endereco"
+          label="Endereço"
+          name="endereco"
+          onChange={e => setAddress(e.target.value)}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="enrollment"
+          label="Matrícula"
+          name="enrollment"
+          onChange={e => setEnrollment(e.target.value)}
         />
         <TextField
           variant="outlined"
@@ -83,37 +127,33 @@ export default function Register() {
           name="password"
           label="Confirme sua senha"
           type="password"
-          id="password"
+          id="passwordConfirm"
           autoComplete="current-password"
           onChange={e => setPasswordConfirm(e.target.value)}
         />
-        <FormLabel component="legend">Selecione o tipo de cadastro: </FormLabel>
-        <RadioGroup
-          aria-label="quiz"
-          name="quiz"
-          value={value}
-          onChange={handleChange}
-        >
-          <FormControlLabel
-            value="usuario"
-            control={<Radio color="primary" />}
-            label="Usúario"
-          />
-          <FormControlLabel
-            value="administrador"
-            control={<Radio color="primary" />}
-            label="Administrador"
-          />
-        </RadioGroup>
 
-        <Button type="submit" fullWidth variant="contained" color="primary">
+        <Button
+          onClick={validateRegister}
+          fullWidth
+          variant="contained"
+          color="primary"
+        >
           Cadastrar
         </Button>
         <S.InfoContainer>
-          <S.Info href="/">{/* Esqueceu sua senha? */}</S.Info>
-          <S.Info href="/login">Já é cadastrado? Entrar</S.Info>
+          <S.Info onClick={() => navigate('/login')} href="/login">
+            Já é cadastrado? Entrar
+          </S.Info>
         </S.InfoContainer>
-        <S.ErrorPassword>{error}</S.ErrorPassword>
+        {error && <Typography color="red">Senhas não conferem!</Typography>}
+        {invalidData && (
+          <Typography color="red">CPF já está cadastrado!</Typography>
+        )}
+        {finish && (
+          <Typography color="green">
+            Cadastro realizado com sucesso! Volte para a tela de login
+          </Typography>
+        )}
       </S.Form>
     </S.Container>
   )
