@@ -37,7 +37,7 @@ public class UserController {
         userService.save(user);
     }
 
-    @GetMapping
+    @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public Person getUser(@RequestBody UserDTO user) {
         return userService.getPersonByLogin(user);
