@@ -1,6 +1,5 @@
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-import { Typography } from '@mui/material'
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import UserContext from '../../hooks/userContext'
@@ -8,6 +7,7 @@ import Bus from '../../img/onibusExemplo.jpeg'
 import { StudentDTO } from '../../schemas'
 import { StudentService } from '../../services/StudentService'
 import { UserService } from '../../services/UserService'
+import { WarningField } from '../WarningField'
 import * as S from './style'
 
 export default function Register() {
@@ -145,14 +145,18 @@ export default function Register() {
             Já é cadastrado? Entrar
           </S.Info>
         </S.InfoContainer>
-        {error && <Typography color="red">Senhas não conferem!</Typography>}
+        {error && (
+          <WarningField severity="error" message="As senhas não conferem!" />
+        )}
         {invalidData && (
-          <Typography color="red">CPF já está cadastrado!</Typography>
+          <WarningField severity="error" message="CPF já está cadastraddo!" />
         )}
         {finish && (
-          <Typography color="green">
-            Cadastro realizado com sucesso! Volte para a tela de login
-          </Typography>
+          <WarningField
+            severity="success"
+            title="Conta criada"
+            message="Volte para a tela de login!"
+          />
         )}
       </S.Form>
     </S.Container>

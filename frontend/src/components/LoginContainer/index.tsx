@@ -1,12 +1,12 @@
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-import { Typography } from '@mui/material'
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import UserContext from '../../hooks/userContext'
 import Bus from '../../img/onibusExemplo.jpeg'
 import { UserDTO } from '../../schemas'
 import { UserService } from '../../services/UserService'
+import { WarningField } from '../WarningField'
 
 import * as S from './style'
 
@@ -41,6 +41,7 @@ export default function LoginContainer() {
           address: res.data.address,
           role: res.data.role
         })
+        window.localStorage.setItem('USER', JSON.stringify(user))
         user.role === 'STUDENT' ? navigate('/user') : navigate('/admin')
       })
       .catch(() => setError(true))
@@ -85,9 +86,7 @@ export default function LoginContainer() {
           id="password"
           onChange={handleChangePassword}
         />
-        {error && (
-          <Typography color="red">Usuário ou senha inválidos</Typography>
-        )}
+        {error && <WarningField message="Senha inválida" severity="error" />}
         <Button
           onClick={handleLogin}
           fullWidth
@@ -96,7 +95,6 @@ export default function LoginContainer() {
         >
           Entrar
         </Button>
-
         <S.InfoContainer>
           <S.Info onClick={() => navigate('/register')}>Cadastrar</S.Info>
         </S.InfoContainer>
