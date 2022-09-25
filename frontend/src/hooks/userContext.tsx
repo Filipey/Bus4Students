@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useState } from 'react'
 
-type User = {
+export type User = {
   cpf: string
   name: string
   address: string
