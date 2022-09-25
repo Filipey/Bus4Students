@@ -9,7 +9,7 @@ export default function User() {
   const { setUser } = useContext(UserContext)
 
   useEffect(() => {
-    validateSession(navigate, setUser)
+    validateSession(navigate, setUser, 'STUDENT')
   }, [])
 
   return <DashboardContainer />

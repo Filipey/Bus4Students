@@ -47,7 +47,7 @@ export function AppBar({ open, toggleDrawer }: AppBarProps) {
       address: '',
       role: ''
     })
-    window.localStorage.clear()
+    window.sessionStorage.clear()
     navigate('/')
   }
 

@@ -4,12 +4,21 @@ import { StudentService } from '../../services/StudentService'
 import * as S from './style'
 
 import Bus from '../../img/onibusExemplo.jpeg'
+import { getUserStorage } from '../../utils/userSession'
 
 export default function Home() {
   const [totalStudents, setTotalStudents] = useState(0)
   const navigate = useNavigate()
 
-  const handleGoToLogin = () => navigate('/login')
+  const handleGoToLogin = () => {
+    const storedUser = getUserStorage()
+    if (storedUser === null) {
+      navigate('/login')
+      return
+    }
+
+    storedUser.role === 'STUDENT' ? navigate('/user') : navigate('/admin')
+  }
   const handleGoToRegister = () => navigate('/register')
 
   useEffect(() => {

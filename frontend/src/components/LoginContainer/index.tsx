@@ -6,6 +6,7 @@ import UserContext from '../../hooks/userContext'
 import Bus from '../../img/onibusExemplo.jpeg'
 import { UserDTO } from '../../schemas'
 import { UserService } from '../../services/UserService'
+import { setUserStorage } from '../../utils/userSession'
 import { WarningField } from '../WarningField'
 
 import * as S from './style'
@@ -41,8 +42,13 @@ export default function LoginContainer() {
           address: res.data.address,
           role: res.data.role
         })
-        window.localStorage.setItem('USER', JSON.stringify(user))
-        user.role === 'STUDENT' ? navigate('/user') : navigate('/admin')
+        setUserStorage({
+          cpf: res.data.cpf,
+          name: res.data.name,
+          address: res.data.address,
+          role: res.data.role
+        })
+        res.data.role === 'STUDENT' ? navigate('/user') : navigate('/admin')
       })
       .catch(() => setError(true))
   }

@@ -9,7 +9,7 @@ export default function Admin() {
   const { setUser } = useContext(UserContext)
 
   useEffect(() => {
-    validateSession(navigate, setUser)
+    validateSession(navigate, setUser, 'ADMIN')
   }, [])
 
   return <DashboardContainer />
