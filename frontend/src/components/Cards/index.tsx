@@ -13,7 +13,7 @@ export function Cards() {
           <Grid item lg={4} sm={6} xl={6} xs={6}>
             <InfoCard
               title="Transporte escolar"
-              info="Ações para Transportes escolares"
+              info="Ações para Transportes Escolares"
               mediaLink="https://mobilidadefloripa.com.br/wp-content/uploads/2019/06/Ônibus-em-Florianópolis.jpg"
               collapseContent={<BusCard />}
             />

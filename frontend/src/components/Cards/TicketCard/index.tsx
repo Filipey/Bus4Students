@@ -1,12 +1,15 @@
-import { Typography } from '@mui/material'
 import { useContext } from 'react'
 import UserContext from '../../../hooks/userContext'
+import ActionButton from '../../ActionButton'
 
 function StudentTicketCardActions() {
   return (
     <>
-      <Typography>Consultar quantidade atual de vales</Typography>
-      <Typography>Consultar quantidade total recebida</Typography>
+      <ActionButton text="Consultar quantidade atual" href="/user/ticket" />
+      <ActionButton
+        text="Consultar quantidade total recebida"
+        href="/user/ticket"
+      />
     </>
   )
 }
@@ -14,12 +17,12 @@ function StudentTicketCardActions() {
 function AdminTicketCardActions() {
   return (
     <>
-      <Typography>Inserir novos vales</Typography>
-      <Typography>Atualizar vales</Typography>
-      <Typography>Deletar vales</Typography>
-      <Typography>Delegar vales a estudantes</Typography>
-      <Typography>Consultar vale</Typography>
-      <Typography>Consultar vales disponíveis</Typography>
+      <ActionButton text="Inserir novos Vales" href="/admin/ticket" />
+      <ActionButton text="Atualizar Vales" href="/admin/ticket" />
+      <ActionButton text="Deletar Vales" href="/admin/ticket" />
+      <ActionButton text="Delegar Vales a Estudantes" href="/admin/ticket" />
+      <ActionButton text="Consultar Vales" href="/admin/ticket" />
+      <ActionButton text="Consultar Vales disponíveis" href="/admin/ticket" />
     </>
   )
 }

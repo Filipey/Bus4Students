@@ -1,15 +1,15 @@
-import { Typography } from '@mui/material'
 import { useContext } from 'react'
 import UserContext from '../../../hooks/userContext'
+import ActionButton from '../../ActionButton'
 
 function AdminBusCardActions() {
   return (
     <>
-      <Typography>Adicionar Onibus</Typography>
-      <Typography>Excluir Onibus</Typography>
-      <Typography>Consultar todos os Onibus</Typography>
-      <Typography>Atualizar Onibus</Typography>
-      <Typography>Delegar Onibus</Typography>
+      <ActionButton text="Adicionar Onibus" href="/admin/bus" />
+      <ActionButton text="Excluir Onibus" href="/admin/bus" />
+      <ActionButton text="Consultar todos os Onibus" href="/admin/bus" />
+      <ActionButton text="Atualizar Onibus" href="/admin/bus" />
+      <ActionButton text="Delegar Onibus" href="/admin/bus" />
     </>
   )
 }
@@ -17,8 +17,8 @@ function AdminBusCardActions() {
 function StudentBusCardActions() {
   return (
     <>
-      <Typography>Consultar meus Onbius</Typography>
-      <Typography>Consultar todos os Onibus</Typography>
+      <ActionButton text="Consultar meus Onibus" href="/user/bus" />
+      <ActionButton text="Consultar todos os Onibus" href="/user/bus" />
     </>
   )
 }

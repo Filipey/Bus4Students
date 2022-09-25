@@ -1,5 +1,6 @@
 import { ExpandMoreOutlined } from '@material-ui/icons'
 import {
+  Box,
   Card,
   CardActions,
   CardContent,
@@ -67,7 +68,16 @@ export function InfoCard({
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>{collapseContent}</CardContent>
+        <CardContent>
+          <Box
+            flexDirection="column"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            {collapseContent}
+          </Box>
+        </CardContent>
       </Collapse>
     </Card>
   )

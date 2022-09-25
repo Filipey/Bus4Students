@@ -1,13 +1,19 @@
-import { Typography } from '@mui/material'
 import { useContext } from 'react'
 import UserContext from '../../../hooks/userContext'
+import ActionButton from '../../ActionButton'
 
 function StudentSchoolActions() {
   return (
     <>
-      <Typography>Participar de Insituição de Ensino</Typography>
-      <Typography>Consultar Instituição de Ensino</Typography>
-      <Typography>Sair de Instituição de Ensino</Typography>
+      <ActionButton
+        text="Participar de Instituição de Ensino"
+        href="/user/school"
+      />
+      <ActionButton
+        text="Consultar Instituição de Ensino"
+        href="/user/school"
+      />
+      <ActionButton text="Sair de Instituição de Ensino" href="/user/school" />
     </>
   )
 }
@@ -15,11 +21,26 @@ function StudentSchoolActions() {
 function AdminSchoolActions() {
   return (
     <>
-      <Typography>Adicinar Instituição de Ensino</Typography>
-      <Typography>Consultar Instituições de Ensino</Typography>
-      <Typography>Deletar Instituição de Ensino</Typography>
-      <Typography>Atualizar Instituição de Ensino</Typography>
-      <Typography>Obter Estudante de Instituição de Ensino</Typography>
+      <ActionButton
+        text="Adicionar Instituição de Ensino"
+        href="/admin/school"
+      />
+      <ActionButton
+        text="Consultar Instituições de Ensino"
+        href="/admin/school"
+      />
+      <ActionButton
+        text="Deletar Instituições de Ensino"
+        href="/admin/school"
+      />
+      <ActionButton
+        text="Atualizar Instituição de Ensino"
+        href="/admin/school"
+      />
+      <ActionButton
+        text="Obter Estudante de Instituição de Ensino"
+        href="/admin/school"
+      />
     </>
   )
 }
