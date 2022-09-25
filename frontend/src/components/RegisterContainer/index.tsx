@@ -141,7 +141,7 @@ export default function Register() {
           Cadastrar
         </Button>
         <S.InfoContainer>
-          <S.Info onClick={() => navigate('/login')} href="/login">
+          <S.Info onClick={() => navigate('/login')}>
             Já é cadastrado? Entrar
           </S.Info>
         </S.InfoContainer>

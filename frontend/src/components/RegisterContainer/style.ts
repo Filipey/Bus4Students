@@ -43,4 +43,5 @@ export const InfoContainer = styled.div`
 `
 export const Info = styled.a`
   text-decoration: none;
+  cursor: pointer;
 `
