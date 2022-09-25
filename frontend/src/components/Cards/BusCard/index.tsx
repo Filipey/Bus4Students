@@ -17,8 +17,8 @@ function AdminBusCardActions() {
 function StudentBusCardActions() {
   return (
     <>
-      <ActionButton text="Consultar meus Onibus" href="/user/bus" />
-      <ActionButton text="Consultar todos os Onibus" href="/user/bus" />
+      <ActionButton text="Consultar meus Onibus" href="/user/bus/my" />
+      <ActionButton text="Consultar todos os Onibus" href="/user/bus/all" />
     </>
   )
 }
