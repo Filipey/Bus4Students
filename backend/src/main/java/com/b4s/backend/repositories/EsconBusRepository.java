@@ -33,9 +33,9 @@ public interface EsconBusRepository extends JpaRepository<EsconBus, String> {
     void delete(@Param("plate") String plate);
 
     @Query(nativeQuery = true, value = "" +
-            "SELECT o.placa, o.horario_saida, e.linha" +
-            "FROM onibus o, escon e" +
-            "WHERE o.placa = e.placa" +
+            "SELECT o.placa, o.horario_saida, e.linha " +
+            "FROM onibus o, escon e " +
+            "WHERE o.placa = e.placa " +
             "ORDER BY o.placa")
     List<EsconBus> getAllEsconBuses();
 
