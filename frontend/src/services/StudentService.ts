@@ -3,9 +3,9 @@ import { Student, StudentDTO } from '../schemas'
 
 const getAllStudents = () => Api.get<Student[]>('/student')
 
-const getStudentByCpf = (cpf: string) => Api.get<Student>('/student/' + { cpf })
+const getStudentByCpf = (cpf: string) => Api.get<Student>(`/student/${cpf}`)
 
-const deleteStudent = (cpf: string) => Api.delete('/student/' + { cpf })
+const deleteStudent = (cpf: string) => Api.delete(`/student/${cpf}`)
 
 const getTotalStudents = () => Api.get<number>('/student/total')
 
