@@ -37,7 +37,7 @@ export function DrawerListItem({ urls }: DrawerListItemProps) {
       <MyListItem icon={<Dashboard />} url={dashboard} iconText="Dashboard" />
       <MyListItem icon={<DirectionsBus />} url={bus} iconText="Onibus" />
       <MyListItem icon={<School />} url={school} iconText="Escolas" />
-      <MyListItem icon={<Subtitles />} url={ticket} iconText="Tickets" />
+      <MyListItem icon={<Subtitles />} url={ticket} iconText="Vales" />
       <MyListItem icon={<BadgeIcon />} url={pass} iconText="Carteira" />
       <MyListItem icon={<Person2 />} url={person} iconText="Estudante" />
     </List>
