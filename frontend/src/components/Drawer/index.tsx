@@ -3,7 +3,7 @@ import { Avatar, Divider, IconButton, styled, Toolbar } from '@mui/material'
 import MuiDrawer from '@mui/material/Drawer'
 import { DrawerListItem } from '../ListItem'
 
-const logo = '../../img/onibusExemplo.jpeg'
+import icon from '../../img/bus-avatar.png'
 
 interface DrawerProps {
   open: boolean
@@ -48,16 +48,11 @@ export function Drawer({ open, toggleDrawer, urls }: DrawerProps) {
         sx={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'flex-end',
+          justifyContent: 'space-between',
           px: [1]
         }}
       >
-        <Avatar
-          src={logo}
-          sx={{
-            mr: 18
-          }}
-        />
+        <Avatar sx={{ ml: '20px', width: '60px', height: '60px' }} src={icon} />
         <IconButton onClick={toggleDrawer}>
           <ChevronLeft />
         </IconButton>
