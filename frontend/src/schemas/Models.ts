@@ -3,19 +3,13 @@ export interface Bus {
   plate: string
 }
 
-export interface EsconBus {
-  departureTime: string
-  // line: +integer($int32),
+export interface EsconBus extends Bus {
   line: number
-  plate: string
 }
 
-export interface HallBus {
-  departureTime: string
+export interface HallBus extends Bus {
   driver: string
-  // passengersLimit: integer($int32),
   passengersLimit: number
-  plate: string
 }
 
 export interface School {
@@ -36,8 +30,6 @@ export interface Student {
 }
 
 export interface StudentPass {
-  // expirationDate:	string($date),
-  // id:	integer($int64),
   expirationDate: string
   id: number
   owner: Student
@@ -45,8 +37,6 @@ export interface StudentPass {
 }
 
 export interface Ticket {
-  // expirationDate:	string($date),
-  // id:	integer($int32),
   expirationDate: string
   id: number
   sink: string
