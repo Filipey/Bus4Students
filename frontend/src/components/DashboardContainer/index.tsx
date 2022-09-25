@@ -23,7 +23,12 @@ export function DashboardContainer({ children }: DashboardContainerProps) {
       <Drawer open={open} toggleDrawer={toggleDrawer} urls={urls} />
       <Box
         component="main"
-        sx={{ flexGrow: 1, height: '100vh', overflow: 'auto' }}
+        sx={{
+          flexGrow: 1,
+          height: '100vh',
+          overflow: 'auto',
+          backgroundColor: theme => theme.palette.grey[100]
+        }}
       >
         <Container maxWidth="lg" sx={{ mt: 6, mb: 6 }}>
           <Grid container spacing={3}>

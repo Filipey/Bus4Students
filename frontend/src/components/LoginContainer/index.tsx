@@ -16,7 +16,7 @@ export default function LoginContainer() {
   const [password, setPassword] = useState('')
   const [userDTO, setUserDTO] = useState<UserDTO | null>(null)
   const [error, setError] = useState(false)
-  const { user, setUser } = useContext(UserContext)
+  const { setUser } = useContext(UserContext)
 
   const navigate = useNavigate()
 
