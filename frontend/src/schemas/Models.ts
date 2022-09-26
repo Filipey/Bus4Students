@@ -1,4 +1,4 @@
-export interface Bus {
+export type Bus = {
   departureTime: string
   plate: string
 }

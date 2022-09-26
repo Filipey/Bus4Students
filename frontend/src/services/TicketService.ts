@@ -10,7 +10,7 @@ const createTicket = (ticket: Ticket) => Api.post('/ticket', ticket)
 const updateTicketInfo = (id: number, ticket: Ticket) =>
   Api.put(`./ticket/${id}`, ticket)
 
-const deleteTicket = (id: number) => Api.delete(`./ticket/${id}`)
+const deleteTicket = (id: number) => Api.delete(`/ticket/${id}`)
 
 export const TicketService = {
   getTicketByID,
