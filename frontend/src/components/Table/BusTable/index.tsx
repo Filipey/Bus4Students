@@ -16,6 +16,8 @@ import UserContext from '../../../hooks/userContext'
 import { Bus, EsconBus, HallBus } from '../../../schemas'
 import { BusService } from '../../../services/BusService'
 import { StudentService } from '../../../services/StudentService'
+import { isEsconBus, isHallBus } from '../../../utils/getType'
+import { BusContentModal } from '../../Modal/ContentHandlerModal/BusModal'
 import { WarningField } from '../../WarningField'
 import { BreadCrumbStep, TableTitle } from '../Title'
 
@@ -27,12 +29,28 @@ export function BusTable({ mode }: BusTableProps) {
   const { user } = useContext(UserContext)
   const isUserAdmin = user.role === 'ADMIN'
 
-  const [buses, setBuses] = useState<Bus[]>([])
+  const [allBuses, setAllBuses] = useState<Bus[]>([])
   const [esconBuses, setEsconBuses] = useState<EsconBus[]>([])
   const [hallBuses, setHallBuses] = useState<HallBus[]>([])
+  const [openModal, setOpenModal] = useState<boolean[]>(
+    Array(allBuses.concat(hallBuses).concat(esconBuses).length).fill(false)
+  )
+  const [modalMode, setModalMode] = useState<'handle' | 'view'>('view')
+
+  const handleOpenModal = (newModalMode: 'handle' | 'view', index: number) => {
+    if (newModalMode === 'handle' && !isUserAdmin) {
+      return
+    }
+
+    setModalMode(newModalMode)
+    setOpenModal(openModal.map((i, pos) => (pos === index ? true : i)))
+  }
+
   const userAdivce =
-    (!isUserAdmin && buses === undefined) ||
-    (!isUserAdmin && buses.length === 0 && mode === 'my')
+    (!isUserAdmin && (hallBuses === undefined || esconBuses === undefined)) ||
+    (!isUserAdmin &&
+      (hallBuses.length === 0 || esconBuses.length === 0) &&
+      mode === 'my')
 
   const steps: BreadCrumbStep[] = [
     {
@@ -49,13 +67,27 @@ export function BusTable({ mode }: BusTableProps) {
     if (isUserAdmin || (!isUserAdmin && mode === 'all')) {
       BusService.getAllEsconBuses().then(res => setEsconBuses(res.data))
       BusService.getAllHallBuses().then(res => setHallBuses(res.data))
+      setAllBuses(allBuses.concat(esconBuses).concat(hallBuses))
       return
     }
 
     StudentService.getStudentByCpf(user.cpf).then(res => {
-      setBuses(res.data.buses)
+      res.data.buses.map(bus => {
+        if (isHallBus(bus)) {
+          setHallBuses([...hallBuses, bus])
+        } else if (isEsconBus(bus)) {
+          setEsconBuses([...esconBuses, bus])
+        }
+        setAllBuses(allBuses.concat(esconBuses).concat(hallBuses))
+      })
     })
   }, [])
+
+  useEffect(() => {
+    setOpenModal(
+      Array(allBuses.concat(hallBuses).concat(esconBuses).length).fill(false)
+    )
+  }, [hallBuses, esconBuses])
 
   return (
     <TableTitle
@@ -91,113 +123,132 @@ export function BusTable({ mode }: BusTableProps) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {!isUserAdmin &&
-                    buses.map((bus, index) => (
-                      <TableRow key={index}>
-                        <TableCell align="center">{bus.plate}</TableCell>
-                        <TableCell align="center">
-                          {bus.departureTime}
-                        </TableCell>
-                        <TableCell align="center">Não há</TableCell>
-                        <TableCell align="center">Não documentado</TableCell>
-                        <TableCell align="center">Não há</TableCell>
-                        <TableCell align="center">
-                          <IconButton>
-                            <Visibility />
-                          </IconButton>
-                        </TableCell>
-                        <TableCell align="center">
-                          <IconButton>
-                            <Edit />
-                          </IconButton>
-                        </TableCell>
-                        <TableCell align="center">
-                          <IconButton>
-                            <Delete />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  {esconBuses.map((bus, index) => (
-                    <TableRow key={index}>
+                  {allBuses.map((bus, index) => (
+                    <TableRow key={bus.plate}>
                       <TableCell align="center">{bus.plate}</TableCell>
                       <TableCell align="center">{bus.departureTime}</TableCell>
-                      <TableCell align="center">{bus.line}</TableCell>
-                      <TableCell align="center">Escon</TableCell>
-                      <TableCell align="center">
-                        <IconButton>
-                          <Tooltip title="Visualizar">
-                            <Visibility />
-                          </Tooltip>
-                        </IconButton>
-                      </TableCell>
-                      <TableCell align="center">
-                        <IconButton>
-                          <Tooltip
-                            title={
-                              isUserAdmin
-                                ? 'Editar'
-                                : 'Você não possui permissão'
-                            }
-                          >
-                            <Edit color="primary" />
-                          </Tooltip>
-                        </IconButton>
-                      </TableCell>
-                      <TableCell align="center">
-                        <IconButton>
-                          <Tooltip
-                            title={
-                              isUserAdmin
-                                ? 'Deletar'
-                                : 'Você não possui permissão'
-                            }
-                          >
-                            <Delete color="error" />
-                          </Tooltip>
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  {hallBuses.map((bus, index) => (
-                    <TableRow key={index}>
-                      <TableCell align="center">{bus.plate}</TableCell>
-                      <TableCell align="center">{bus.departureTime}</TableCell>
-                      <TableCell align="center">Não Há</TableCell>
-                      <TableCell align="center">Prefeitura</TableCell>
-                      <TableCell align="center">
-                        <IconButton>
-                          <Tooltip title="Visualizar">
-                            <Visibility />
-                          </Tooltip>
-                        </IconButton>
-                      </TableCell>
-                      <TableCell align="center">
-                        <IconButton>
-                          <Tooltip
-                            title={
-                              isUserAdmin
-                                ? 'Editar'
-                                : 'Você não possui permissão'
-                            }
-                          >
-                            <Edit color="primary" />
-                          </Tooltip>
-                        </IconButton>
-                      </TableCell>
-                      <TableCell align="center">
-                        <IconButton>
-                          <Tooltip
-                            title={
-                              isUserAdmin
-                                ? 'Deletar'
-                                : 'Você não possui permissão'
-                            }
-                          >
-                            <Delete color="error" />
-                          </Tooltip>
-                        </IconButton>
-                      </TableCell>
+                      {isHallBus(bus) ? (
+                        <>
+                          <TableCell align="center">Não Há</TableCell>
+                          <TableCell align="center">Prefeitura</TableCell>
+                          <TableCell align="center">
+                            <IconButton
+                              id={index.toString()}
+                              onClick={() => {
+                                console.log(bus.plate)
+                                handleOpenModal('view', index)
+                              }}
+                            >
+                              <Tooltip title="Visualizar">
+                                <Visibility />
+                              </Tooltip>
+                            </IconButton>
+                          </TableCell>
+                          <TableCell align="center">
+                            <IconButton
+                              id={index.toString()}
+                              onClick={() => handleOpenModal('handle', index)}
+                            >
+                              <Tooltip
+                                title={
+                                  isUserAdmin
+                                    ? 'Editar'
+                                    : 'Você não possui permissão'
+                                }
+                              >
+                                <Edit color="primary" />
+                              </Tooltip>
+                            </IconButton>
+                          </TableCell>
+                          <TableCell align="center">
+                            <IconButton
+                              id={index.toString()}
+                              onClick={() => handleOpenModal('handle', index)}
+                            >
+                              <Tooltip
+                                title={
+                                  isUserAdmin
+                                    ? 'Deletar'
+                                    : 'Você não possui permissão'
+                                }
+                              >
+                                <Delete color="error" />
+                              </Tooltip>
+                            </IconButton>
+                          </TableCell>
+                          <BusContentModal
+                            mode={modalMode}
+                            state={openModal}
+                            setState={setOpenModal}
+                            bus={bus}
+                            index={index}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          {isEsconBus(bus) ? (
+                            <>
+                              <TableCell align="center">{bus.line}</TableCell>
+                              <TableCell align="center">Escon</TableCell>
+                              <TableCell align="center">
+                                <IconButton
+                                  id={bus.plate}
+                                  onClick={() => handleOpenModal('view', index)}
+                                >
+                                  <Tooltip title="Visualizar">
+                                    <Visibility />
+                                  </Tooltip>
+                                </IconButton>
+                              </TableCell>
+                              <TableCell align="center">
+                                <IconButton
+                                  id={index.toString()}
+                                  onClick={() =>
+                                    handleOpenModal('handle', index)
+                                  }
+                                >
+                                  <Tooltip
+                                    title={
+                                      isUserAdmin
+                                        ? 'Editar'
+                                        : 'Você não possui permissão'
+                                    }
+                                  >
+                                    <Edit color="primary" />
+                                  </Tooltip>
+                                </IconButton>
+                              </TableCell>
+                              <TableCell align="center">
+                                <IconButton
+                                  id={index.toString()}
+                                  onClick={() =>
+                                    handleOpenModal('handle', index)
+                                  }
+                                >
+                                  <Tooltip
+                                    title={
+                                      isUserAdmin
+                                        ? 'Deletar'
+                                        : 'Você não possui permissão'
+                                    }
+                                  >
+                                    <Delete color="error" />
+                                  </Tooltip>
+                                </IconButton>
+                              </TableCell>
+                              <BusContentModal
+                                mode={modalMode}
+                                state={openModal}
+                                setState={setOpenModal}
+                                bus={bus}
+                                index={index}
+                              />
+                            </>
+                          ) : (
+                            ''
+                          )}
+                        </>
+                      )}
                     </TableRow>
                   ))}
                 </TableBody>
