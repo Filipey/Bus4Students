@@ -70,7 +70,7 @@ export function AppBar({ open, toggleDrawer }: AppBarProps) {
           noWrap
           sx={{ flexGrow: 1 }}
         >
-          {'Bem vindo, ' + user.name}
+          {`Bem vindo(a), ${user.name}`}
         </Typography>
         <IconButton>
           <Person htmlColor="#FFFFFF" />
