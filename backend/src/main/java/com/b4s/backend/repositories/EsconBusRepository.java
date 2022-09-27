@@ -1,5 +1,6 @@
 package com.b4s.backend.repositories;
 
+import com.b4s.backend.api.dto.EsconBusDTO;
 import com.b4s.backend.domain.EsconBus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -25,8 +26,9 @@ public interface EsconBusRepository extends JpaRepository<EsconBus, String> {
     void insert(@Param("bus") EsconBus bus);
 
     @Modifying
-    @Query(nativeQuery = true, value = "UPDATE escon SET linha = :line WHERE placa = :plate")
-    void updateLine(@Param("plate") String plate, @Param("line") int line);
+    @Query(nativeQuery = true, value = "UPDATE escon SET linha = :#{#bus.line} WHERE placa = :plate ; " +
+            "UPDATE onibus SET horario_saida = :#{#bus.departureTime} WHERE placa = :plate")
+    void updateLine(@Param("plate") String plate, @Param("bus")EsconBusDTO bus);
 
     @Modifying
     @Query(nativeQuery = true, value = "DELETE FROM onibus WHERE (placa = :plate);" + "DELETE FROM escon WHERE (placa = :plate)")

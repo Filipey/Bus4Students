@@ -1,5 +1,6 @@
 package com.b4s.backend.services.impl;
 
+import com.b4s.backend.api.dto.EsconBusDTO;
 import com.b4s.backend.api.exception.ObjectAlreadyExistsException;
 import com.b4s.backend.api.exception.ObjectNotFoundException;
 import com.b4s.backend.domain.EsconBus;
@@ -37,9 +38,9 @@ public class EsconServiceImpl implements EsconService {
 
     @Override
     @Transactional
-    public void updateLine(String plate, int line) {
+    public void updateLine(String plate, EsconBusDTO dto) {
         try {
-            esconBusRepository.updateLine(plate, line);
+            esconBusRepository.updateLine(plate, dto);
         } catch (Exception e) {
             throw new ObjectNotFoundException("Bus not found");
         }

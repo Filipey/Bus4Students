@@ -1,5 +1,6 @@
 package com.b4s.backend.api.controllers;
 
+import com.b4s.backend.api.dto.EsconBusDTO;
 import com.b4s.backend.domain.EsconBus;
 import com.b4s.backend.services.EsconService;
 import com.b4s.backend.services.impl.EsconServiceImpl;
@@ -44,15 +45,15 @@ public class EsconController {
         esconService.insert(bus);
     }
 
-    @PatchMapping("/{plate}")
+    @PutMapping("/{plate}")
     @ApiOperation("Update a EsconBus line")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Bus updated"),
             @ApiResponse(code = 400, message = "Authorization error")
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable String plate, @RequestBody @Validated int line) {
-        esconService.updateLine(plate, line);
+    public void update(@PathVariable String plate, @RequestBody @Validated EsconBusDTO dto) {
+        esconService.updateLine(plate, dto);
     }
 
     @DeleteMapping("/{plate}")
