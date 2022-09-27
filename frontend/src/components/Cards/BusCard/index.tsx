@@ -5,11 +5,8 @@ import ActionButton from '../../ActionButton'
 function AdminBusCardActions() {
   return (
     <>
-      <ActionButton text="Adicionar Onibus" href="/admin/bus" />
-      <ActionButton text="Excluir Onibus" href="/admin/bus" />
-      <ActionButton text="Consultar todos os Onibus" href="/admin/bus" />
-      <ActionButton text="Atualizar Onibus" href="/admin/bus" />
-      <ActionButton text="Delegar Onibus" href="/admin/bus" />
+      <ActionButton text="Gerenciar Transportes" href="/admin/bus" />
+      <ActionButton text="Delegar Transporte a Estudante" href="/admin/bus" />
     </>
   )
 }

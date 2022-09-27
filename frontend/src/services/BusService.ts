@@ -1,5 +1,5 @@
 import { Api } from '../providers'
-import { Bus, EsconBus, HallBus, HallBusDTO } from '../schemas'
+import { Bus, EsconBus, EsconBusDTO, HallBus, HallBusDTO } from '../schemas'
 
 const getAllHallBuses = () => Api.get<HallBus[]>('/hall')
 
@@ -8,7 +8,7 @@ const insertNewHallBus = (hallBus: HallBus) => Api.post('/hall', hallBus)
 const getHallBusByPlate = (plate: string) => Api.get(`/hall/${plate}`)
 
 const updateHallBus = (plate: string, hallBus: HallBusDTO) =>
-  Api.put('./hall/' + { plate }, hallBus)
+  Api.put(`/hall/${plate}`, hallBus)
 
 const deleteHallBus = (plate: string) => Api.delete(`/hall/${plate}`)
 
@@ -20,8 +20,8 @@ const getEsconBusInfo = (plate: string) => Api.get(`/escon/${plate}`)
 
 const deleteEsconBus = (plate: string) => Api.delete(`/escon/${plate}`)
 
-const updateEsconBusLine = (line: string, plate: string) =>
-  Api.patch(`/escon/${plate}`, line)
+const updateEsconBus = (plate: string, esconBus: EsconBusDTO) =>
+  Api.put(`/escon/${plate}`, esconBus)
 
 export const BusService = {
   getAllHallBuses,
@@ -33,5 +33,5 @@ export const BusService = {
   createEsconBus,
   getEsconBusInfo,
   deleteEsconBus,
-  updateEsconBusLine
+  updateEsconBus
 }

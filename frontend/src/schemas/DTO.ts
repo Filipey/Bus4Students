@@ -1,5 +1,4 @@
 export interface StudentPassDTO {
-  // expirationDate: string($date-time),
   expirationDate: string
   schoolName: string
   studentCpf: string
@@ -14,8 +13,13 @@ export interface StudentDTO {
 
 export interface HallBusDTO {
   driver: string
-  // passengersLimit:	integer($int32),
   passengersLimit: number
+  departureTime: string
+}
+
+export interface EsconBusDTO {
+  line: number
+  departureTime: string
 }
 
 export interface PersonResponseDTO {

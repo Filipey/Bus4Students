@@ -18,6 +18,7 @@ import {
 import { useContext, useEffect, useState } from 'react'
 import UserContext from '../../../hooks/userContext'
 import { EsconBus, HallBus } from '../../../schemas'
+import { BusService } from '../../../services/BusService'
 import { isEsconBus, isHallBus } from '../../../utils/getType'
 import { InfoTextField } from '../../InfoTextField'
 import { WarningField } from '../../WarningField'
@@ -38,7 +39,6 @@ export function BusContentModal({
   index
 }: BusContentProps) {
   const { user } = useContext(UserContext)
-  const [plate, setPlate] = useState(bus.plate)
   const [departureTime, setDepartureTime] = useState(bus.departureTime)
   const [driver, setDriver] = useState(isHallBus(bus) ? bus.driver : '')
   const [passengersLimit, setPassengersLimit] = useState(
@@ -62,9 +62,6 @@ export function BusContentModal({
   }
 
   function hasChanged() {
-    if (plate !== bus.plate) {
-      changes.find(c => c === 'Placa') ? '' : setChanges([...changes, 'Placa'])
-    }
     if (departureTime !== bus.departureTime) {
       changes.find(c => c === 'Horário de Saída')
         ? ''
@@ -91,14 +88,23 @@ export function BusContentModal({
     }
   }
 
+  function handleSubmitChanges() {
+    isHallBus(bus)
+      ? BusService.updateHallBus(bus.plate, {
+          driver,
+          departureTime,
+          passengersLimit
+        })
+      : BusService.updateEsconBus(bus.plate, { line, departureTime })
+    setState(state.map((i, pos) => (pos === index ? false : i)))
+  }
+
   useEffect(() => {
     hasChanged()
-    console.log(changes)
-  }, [plate, departureTime, driver, passengersLimit, line])
+  }, [departureTime, driver, passengersLimit, line])
 
   function handleCloseModal() {
     setPermission(true)
-    setPlate(bus.plate)
     setDepartureTime(bus.departureTime)
     setDriver(isHallBus(bus) ? bus.driver : '')
     setPassengersLimit(isHallBus(bus) ? bus.passengersLimit : 0)
@@ -132,10 +138,9 @@ export function BusContentModal({
             <InfoTextField
               label="Placa"
               defaultValue={bus.plate}
-              disabled={permission}
+              disabled={true}
               fullWidth={true}
               icon={<DirectionsBus />}
-              onChange={e => setPlate(e.target.value)}
             />
             <InfoTextField
               label="Horário de Saída"
@@ -237,6 +242,13 @@ export function BusContentModal({
                     change => change
                   )}`}
                 />
+                <Button
+                  onClick={handleSubmitChanges}
+                  variant="contained"
+                  color="inherit"
+                >
+                  Confirmar
+                </Button>
               </>
             )}
           </>
