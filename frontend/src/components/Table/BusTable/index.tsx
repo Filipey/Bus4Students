@@ -63,11 +63,10 @@ export function BusTable({ mode }: BusTableProps) {
     }
   ]
 
-  useEffect(() => {
+  function fetchData() {
     if (isUserAdmin || (!isUserAdmin && mode === 'all')) {
       BusService.getAllEsconBuses().then(res => setEsconBuses(res.data))
       BusService.getAllHallBuses().then(res => setHallBuses(res.data))
-      setAllBuses(allBuses.concat(esconBuses).concat(hallBuses))
       return
     }
 
@@ -78,15 +77,18 @@ export function BusTable({ mode }: BusTableProps) {
         } else if (isEsconBus(bus)) {
           setEsconBuses([...esconBuses, bus])
         }
-        setAllBuses(allBuses.concat(esconBuses).concat(hallBuses))
       })
     })
+  }
+
+  useEffect(() => {
+    fetchData()
   }, [])
 
   useEffect(() => {
-    setOpenModal(
-      Array(allBuses.concat(hallBuses).concat(esconBuses).length).fill(false)
-    )
+    const mergedBuses = [...esconBuses, ...hallBuses]
+    setAllBuses(mergedBuses)
+    setOpenModal(Array(mergedBuses.length).fill(false))
   }, [hallBuses, esconBuses])
 
   return (
@@ -134,10 +136,7 @@ export function BusTable({ mode }: BusTableProps) {
                           <TableCell align="center">
                             <IconButton
                               id={index.toString()}
-                              onClick={() => {
-                                console.log(bus.plate)
-                                handleOpenModal('view', index)
-                              }}
+                              onClick={() => handleOpenModal('view', index)}
                             >
                               <Tooltip title="Visualizar">
                                 <Visibility />
