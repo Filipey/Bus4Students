@@ -1,5 +1,6 @@
 package com.b4s.backend.services.impl;
 
+import com.b4s.backend.api.dto.HallBusDTO;
 import com.b4s.backend.api.exception.ObjectAlreadyExistsException;
 import com.b4s.backend.api.exception.ObjectNotFoundException;
 import com.b4s.backend.domain.HallBus;
@@ -37,8 +38,8 @@ public class HallBusServiceImpl implements HallBusService {
 
     @Override
     @Transactional
-    public void update(String plate, String driverName, int passengersLimit) {
-        hallBusRepository.update(plate, driverName, passengersLimit);
+    public void update(String plate, HallBusDTO dto) {
+        hallBusRepository.update(plate, dto);
     }
 
     @Override

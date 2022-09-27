@@ -63,8 +63,7 @@ public class HallBusController {
             @ApiResponse(code = 400, message = "Authorization Error"),
     })
     void update(@PathVariable String plate, @RequestBody HallBusDTO dto) {
-
-        hallBusService.update(plate, dto.getDriver(), dto.getPassengersLimit());
+        hallBusService.update(plate, dto);
     }
 
     @DeleteMapping("/{plate}")

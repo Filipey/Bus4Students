@@ -1,5 +1,6 @@
 package com.b4s.backend.repositories;
 
+import com.b4s.backend.api.dto.HallBusDTO;
 import com.b4s.backend.domain.HallBus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -29,8 +30,9 @@ public interface HallBusRepository extends JpaRepository<HallBus, String> {
     @Modifying
     @Query(nativeQuery = true, value =
             "UPDATE onibus_prefeitura " +
-            "SET motorista = :driverName, numero_passageiro = :passengersLimit " + "WHERE placa = :plate")
-    void update(@Param("plate") String plate, @Param("driverName") String driverName, @Param("passengersLimit") int passengersLimit);
+            "SET motorista = :#{#bus.driver}, numero_passageiro = :#{#bus.passengersLimit} " + "WHERE placa = :plate ; " +
+                    "UPDATE onibus SET horario_saida = :#{#bus.departureTime} WHERE placa = :plate")
+    void update(@Param("plate") String plate, @Param("bus")HallBusDTO bus);
 
     @Modifying
     @Query(nativeQuery = true, value =

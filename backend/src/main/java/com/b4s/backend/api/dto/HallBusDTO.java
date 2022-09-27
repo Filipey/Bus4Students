@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class HallBusDTO {
     private String driver;
     private int passengersLimit;
+    private String departureTime;
 }
