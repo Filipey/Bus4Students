@@ -63,31 +63,29 @@ export function BusContentModal({
 
   function hasChanged() {
     if (plate !== bus.plate) {
-      changes.find(c => c === 'Placa')
-        ? setChanges(changes)
-        : setChanges([...changes, 'Placa'])
+      changes.find(c => c === 'Placa') ? '' : setChanges([...changes, 'Placa'])
     }
     if (departureTime !== bus.departureTime) {
       changes.find(c => c === 'Horário de Saída')
-        ? setChanges(changes)
+        ? ''
         : setChanges([...changes, 'Horário de Saída'])
     }
     if (isHallBus(bus)) {
       if (driver !== bus.driver) {
         changes.find(c => c === 'Motorista')
-          ? setChanges(changes)
+          ? ''
           : setChanges([...changes, 'Motorista'])
       }
       if (passengersLimit !== passengersLimit) {
         changes.find(c => c === 'Limite de Passageiros')
-          ? setChanges(changes)
+          ? ''
           : setChanges([...changes, 'Limite de Passageiros'])
       }
     }
     if (isEsconBus(bus)) {
       if (line !== bus.line) {
         changes.find(c => c === 'Linha')
-          ? setChanges(changes)
+          ? ''
           : setChanges([...changes, 'Linha'])
       }
     }
