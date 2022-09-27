@@ -1,4 +1,5 @@
 import { InputAdornment, TextField } from '@mui/material'
+import React from 'react'
 
 interface InfoTextFieldProps {
   label: string
@@ -6,6 +7,8 @@ interface InfoTextFieldProps {
   fullWidth?: boolean
   disabled?: boolean
   defaultValue?: string
+  value?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export function InfoTextField({
@@ -13,7 +16,9 @@ export function InfoTextField({
   icon,
   fullWidth,
   disabled,
-  defaultValue
+  defaultValue,
+  value,
+  onChange
 }: InfoTextFieldProps) {
   return (
     <TextField
@@ -23,6 +28,8 @@ export function InfoTextField({
       label={label}
       disabled={disabled}
       defaultValue={defaultValue}
+      value={value}
+      onChange={onChange}
       InputProps={{
         startAdornment: <InputAdornment position="start">{icon}</InputAdornment>
       }}
