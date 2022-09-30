@@ -18,6 +18,7 @@ import { BusService } from '../../../services/BusService'
 import { StudentService } from '../../../services/StudentService'
 import { isEsconBus, isHallBus } from '../../../utils/getType'
 import { BusContentModal } from '../../Modal/ContentHandlerModal/BusModal'
+import { InsertBusModal } from '../../Modal/InsertModal/Bus'
 import { WarningField } from '../../WarningField'
 import { BreadCrumbStep, TableTitle } from '../Title'
 
@@ -36,6 +37,7 @@ export function BusTable({ mode }: BusTableProps) {
     Array(allBuses.concat(hallBuses).concat(esconBuses).length).fill(false)
   )
   const [modalMode, setModalMode] = useState<'handle' | 'view'>('view')
+  const [insertBus, setInsertBus] = useState(false)
 
   const handleOpenModal = (newModalMode: 'handle' | 'view', index: number) => {
     if (newModalMode === 'handle' && !isUserAdmin) {
@@ -96,8 +98,9 @@ export function BusTable({ mode }: BusTableProps) {
       title="Onibus"
       steps={steps}
       buttonTitle="Adicionar Onibus"
-      buttonAction={() => console.log('todo')}
+      buttonAction={() => setInsertBus(true)}
     >
+      <InsertBusModal state={insertBus} setState={setInsertBus} />
       <Grid
         item
         sx={{ pl: '20px', pt: '24px' }}
