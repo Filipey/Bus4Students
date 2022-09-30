@@ -1,5 +1,5 @@
 import { Api } from '../providers'
-import { Bus, EsconBus, EsconBusDTO, HallBus, HallBusDTO } from '../schemas'
+import { EsconBus, EsconBusDTO, HallBus, HallBusDTO } from '../schemas'
 
 const getAllHallBuses = () => Api.get<HallBus[]>('/hall')
 
@@ -14,7 +14,7 @@ const deleteHallBus = (plate: string) => Api.delete(`/hall/${plate}`)
 
 const getAllEsconBuses = () => Api.get<EsconBus[]>('/escon')
 
-const createEsconBus = (bus: Bus) => Api.post('/escon', bus)
+const createEsconBus = (bus: EsconBus) => Api.post('/escon', bus)
 
 const getEsconBusInfo = (plate: string) => Api.get(`/escon/${plate}`)
 
