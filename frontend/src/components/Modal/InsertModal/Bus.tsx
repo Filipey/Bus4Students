@@ -10,7 +10,7 @@ import {
   IconButton,
   TextField
 } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BusService } from '../../../services/BusService'
 import { InfoTextField } from '../../InfoTextField'
 import { WarningField } from '../../WarningField'
@@ -28,6 +28,7 @@ export function InsertBusModal({ state, setState }: insertBusModalProps) {
   const [passengersLimit, setPassengersLimit] = useState<number | null>(null)
   const [line, setLine] = useState<number | null>(null)
   const [submit, setSubmit] = useState(false)
+  const [badRequest, setBadRequest] = useState(false)
 
   const handleSubmit = () => {
     provider === 'Prefeitura'
@@ -37,11 +38,30 @@ export function InsertBusModal({ state, setState }: insertBusModalProps) {
           passengersLimit,
           driver
         })
+          .then(res =>
+            res.status === 201 ? setSubmit(true) : setBadRequest(true)
+          )
+          .catch(res => setBadRequest(true))
       : BusService.createEsconBus({ plate, departureTime, line })
-    setSubmit(true)
+          .then(res =>
+            res.status === 201 ? setSubmit(true) : setBadRequest(true)
+          )
+          .catch(res => setBadRequest(true))
   }
 
+  useEffect(() => {
+    areFieldsAcceptable()
+  }, [provider, plate, departureTime, driver, passengersLimit])
+
   const handleCancel = () => {
+    setProvider(null)
+    setPlate('')
+    setDepartureTime('')
+    setDriver('')
+    setPassengersLimit(null)
+    setLine(null)
+    setSubmit(false)
+    setBadRequest(false)
     setState(false)
   }
 
@@ -60,15 +80,13 @@ export function InsertBusModal({ state, setState }: insertBusModalProps) {
     }
   }
 
-  const isSubmitSucces = areFieldsAcceptable() && submit === true
-
   return (
     <Dialog open={state} scroll="body" fullWidth>
       <DialogTitle color="#03a9f4">
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>Novo Transporte</Grid>
           <Grid item>
-            <IconButton sx={{ size: 'small' }} onClick={() => setState(false)}>
+            <IconButton sx={{ size: 'small' }} onClick={handleCancel}>
               <Close />
             </IconButton>
           </Grid>
@@ -138,7 +156,7 @@ export function InsertBusModal({ state, setState }: insertBusModalProps) {
               onChange={e => setLine(Number(e.target.value))}
             />
           )}
-          {isSubmitSucces && (
+          {submit && (
             <WarningField
               severity="success"
               title="Cadastro realizado com sucesso!"
@@ -167,12 +185,19 @@ export function InsertBusModal({ state, setState }: insertBusModalProps) {
                 <Button
                   variant="contained"
                   color="error"
-                  onClick={handleCancel}
+                  onClick={() => console.log(badRequest, !submit)}
                 >
                   Cancelar
                 </Button>
               </Grid>
             </Grid>
+          )}
+          {badRequest && !submit && (
+            <WarningField
+              title="Entrada de dados inválida!"
+              severity="error"
+              message={`O transporte já consta na base de dados! Verifique a integridade das entradas.`}
+            />
           )}
         </Grid>
       </DialogContent>
