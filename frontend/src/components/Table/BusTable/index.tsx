@@ -8,10 +8,11 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
   Tooltip
 } from '@mui/material'
-import { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import UserContext from '../../../hooks/userContext'
 import { Bus, EsconBus, HallBus } from '../../../schemas'
 import { BusService } from '../../../services/BusService'
@@ -38,6 +39,8 @@ export function BusTable({ mode }: BusTableProps) {
   )
   const [modalMode, setModalMode] = useState<'handle' | 'view'>('view')
   const [insertBus, setInsertBus] = useState(false)
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
 
   const handleOpenModal = (newModalMode: 'handle' | 'view', index: number) => {
     if (newModalMode === 'handle' && !isUserAdmin) {
@@ -83,9 +86,16 @@ export function BusTable({ mode }: BusTableProps) {
     })
   }
 
+  const handleRowsPerPageChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setRowsPerPage(parseInt(e.target.value))
+    setPage(0)
+  }
+
   useEffect(() => {
     fetchData()
-  }, [setInsertBus, setOpenModal])
+  }, [])
 
   useEffect(() => {
     const mergedBuses = [...esconBuses, ...hallBuses]
@@ -128,133 +138,150 @@ export function BusTable({ mode }: BusTableProps) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {allBuses.map((bus, index) => (
-                    <TableRow key={bus.plate}>
-                      <TableCell align="center">{bus.plate}</TableCell>
-                      <TableCell align="center">{bus.departureTime}</TableCell>
-                      {isHallBus(bus) ? (
-                        <>
-                          <TableCell align="center">Não Há</TableCell>
-                          <TableCell align="center">Prefeitura</TableCell>
-                          <TableCell align="center">
-                            <IconButton
-                              id={index.toString()}
-                              onClick={() => handleOpenModal('view', index)}
-                            >
-                              <Tooltip title="Visualizar">
-                                <Visibility />
-                              </Tooltip>
-                            </IconButton>
-                          </TableCell>
-                          <TableCell align="center">
-                            <IconButton
-                              id={index.toString()}
-                              onClick={() => handleOpenModal('handle', index)}
-                            >
-                              <Tooltip
-                                title={
-                                  isUserAdmin
-                                    ? 'Editar'
-                                    : 'Você não possui permissão'
-                                }
+                  {allBuses
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((bus, index) => (
+                      <TableRow key={bus.plate}>
+                        <TableCell align="center">{bus.plate}</TableCell>
+                        <TableCell align="center">
+                          {bus.departureTime}
+                        </TableCell>
+                        {isHallBus(bus) ? (
+                          <>
+                            <TableCell align="center">Não Há</TableCell>
+                            <TableCell align="center">Prefeitura</TableCell>
+                            <TableCell align="center">
+                              <IconButton
+                                id={index.toString()}
+                                onClick={() => handleOpenModal('view', index)}
                               >
-                                <Edit color="primary" />
-                              </Tooltip>
-                            </IconButton>
-                          </TableCell>
-                          <TableCell align="center">
-                            <IconButton
-                              id={index.toString()}
-                              onClick={() => handleOpenModal('handle', index)}
-                            >
-                              <Tooltip
-                                title={
-                                  isUserAdmin
-                                    ? 'Deletar'
-                                    : 'Você não possui permissão'
-                                }
+                                <Tooltip title="Visualizar">
+                                  <Visibility />
+                                </Tooltip>
+                              </IconButton>
+                            </TableCell>
+                            <TableCell align="center">
+                              <IconButton
+                                id={index.toString()}
+                                onClick={() => handleOpenModal('handle', index)}
                               >
-                                <Delete color="error" />
-                              </Tooltip>
-                            </IconButton>
-                          </TableCell>
-                          <BusContentModal
-                            mode={modalMode}
-                            state={openModal}
-                            setState={setOpenModal}
-                            bus={bus}
-                            index={index}
-                          />
-                        </>
-                      ) : (
-                        <>
-                          {isEsconBus(bus) ? (
-                            <>
-                              <TableCell align="center">{bus.line}</TableCell>
-                              <TableCell align="center">Escon</TableCell>
-                              <TableCell align="center">
-                                <IconButton
-                                  id={bus.plate}
-                                  onClick={() => handleOpenModal('view', index)}
-                                >
-                                  <Tooltip title="Visualizar">
-                                    <Visibility />
-                                  </Tooltip>
-                                </IconButton>
-                              </TableCell>
-                              <TableCell align="center">
-                                <IconButton
-                                  id={index.toString()}
-                                  onClick={() =>
-                                    handleOpenModal('handle', index)
+                                <Tooltip
+                                  title={
+                                    isUserAdmin
+                                      ? 'Editar'
+                                      : 'Você não possui permissão'
                                   }
                                 >
-                                  <Tooltip
-                                    title={
-                                      isUserAdmin
-                                        ? 'Editar'
-                                        : 'Você não possui permissão'
-                                    }
-                                  >
-                                    <Edit color="primary" />
-                                  </Tooltip>
-                                </IconButton>
-                              </TableCell>
-                              <TableCell align="center">
-                                <IconButton
-                                  id={index.toString()}
-                                  onClick={() =>
-                                    handleOpenModal('handle', index)
+                                  <Edit color="primary" />
+                                </Tooltip>
+                              </IconButton>
+                            </TableCell>
+                            <TableCell align="center">
+                              <IconButton
+                                id={index.toString()}
+                                onClick={() => handleOpenModal('handle', index)}
+                              >
+                                <Tooltip
+                                  title={
+                                    isUserAdmin
+                                      ? 'Deletar'
+                                      : 'Você não possui permissão'
                                   }
                                 >
-                                  <Tooltip
-                                    title={
-                                      isUserAdmin
-                                        ? 'Deletar'
-                                        : 'Você não possui permissão'
+                                  <Delete color="error" />
+                                </Tooltip>
+                              </IconButton>
+                            </TableCell>
+                            <BusContentModal
+                              mode={modalMode}
+                              state={openModal}
+                              setState={setOpenModal}
+                              bus={bus}
+                              index={index}
+                            />
+                          </>
+                        ) : (
+                          <>
+                            {isEsconBus(bus) ? (
+                              <>
+                                <TableCell align="center">{bus.line}</TableCell>
+                                <TableCell align="center">Escon</TableCell>
+                                <TableCell align="center">
+                                  <IconButton
+                                    id={bus.plate}
+                                    onClick={() =>
+                                      handleOpenModal('view', index)
                                     }
                                   >
-                                    <Delete color="error" />
-                                  </Tooltip>
-                                </IconButton>
-                              </TableCell>
-                              <BusContentModal
-                                mode={modalMode}
-                                state={openModal}
-                                setState={setOpenModal}
-                                bus={bus}
-                                index={index}
-                              />
-                            </>
-                          ) : (
-                            ''
-                          )}
-                        </>
-                      )}
-                    </TableRow>
-                  ))}
+                                    <Tooltip title="Visualizar">
+                                      <Visibility />
+                                    </Tooltip>
+                                  </IconButton>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <IconButton
+                                    id={index.toString()}
+                                    onClick={() =>
+                                      handleOpenModal('handle', index)
+                                    }
+                                  >
+                                    <Tooltip
+                                      title={
+                                        isUserAdmin
+                                          ? 'Editar'
+                                          : 'Você não possui permissão'
+                                      }
+                                    >
+                                      <Edit color="primary" />
+                                    </Tooltip>
+                                  </IconButton>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <IconButton
+                                    id={index.toString()}
+                                    onClick={() =>
+                                      handleOpenModal('handle', index)
+                                    }
+                                  >
+                                    <Tooltip
+                                      title={
+                                        isUserAdmin
+                                          ? 'Deletar'
+                                          : 'Você não possui permissão'
+                                      }
+                                    >
+                                      <Delete color="error" />
+                                    </Tooltip>
+                                  </IconButton>
+                                </TableCell>
+                                <BusContentModal
+                                  mode={modalMode}
+                                  state={openModal}
+                                  setState={setOpenModal}
+                                  bus={bus}
+                                  index={index}
+                                />
+                              </>
+                            ) : (
+                              ''
+                            )}
+                          </>
+                        )}
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
+              <TablePagination
+                component="div"
+                sx={{ justifyContent: 'flex-end' }}
+                count={allBuses.length}
+                page={page}
+                labelRowsPerPage="Dados por página"
+                rowsPerPage={rowsPerPage}
+                rowsPerPageOptions={[5, 10, 15]}
+                onPageChange={(e, page) => setPage(page)}
+                onRowsPerPageChange={handleRowsPerPageChange}
+              />
             </TableContainer>
           </Paper>
         )}
