@@ -85,7 +85,7 @@ export function BusTable({ mode }: BusTableProps) {
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [setInsertBus, setOpenModal])
 
   useEffect(() => {
     const mergedBuses = [...esconBuses, ...hallBuses]

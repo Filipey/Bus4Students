@@ -49,6 +49,7 @@ export function BusContentModal({
   const [changes, setChanges] = useState<string[]>([])
   const [changesWarning, setChangesWarning] = useState(false)
   const [successWarning, setSuccessWarning] = useState(false)
+  const [confirmDelete, setConfirmDelete] = useState(false)
 
   function userPermission() {
     if (mode === 'view') {
@@ -122,6 +123,7 @@ export function BusContentModal({
     setChanges([])
     setChangesWarning(false)
     setSuccessWarning(false)
+    setConfirmDelete(false)
     setState(state.map((i, pos) => (pos === index ? false : i)))
   }
 
@@ -229,7 +231,7 @@ export function BusContentModal({
               </Grid>
               <Grid item>
                 <Button
-                  onClick={handleDelete}
+                  onClick={() => setConfirmDelete(true)}
                   variant="contained"
                   color="error"
                 >
@@ -272,6 +274,22 @@ export function BusContentModal({
                 title="Mudanças realizadas com sucesso"
                 message="Volte para a página para observar as mudanças"
               />
+            )}
+            {confirmDelete && (
+              <>
+                <WarningField
+                  severity="warning"
+                  title="Tem certeza?"
+                  message={`O transporte de placa ${bus.plate} será deletado`}
+                />
+                <Button
+                  variant="contained"
+                  color="inherit"
+                  onClick={handleDelete}
+                >
+                  Confirmar
+                </Button>
+              </>
             )}
           </>
         )}
