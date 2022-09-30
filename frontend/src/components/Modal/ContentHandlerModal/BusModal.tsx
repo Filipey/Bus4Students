@@ -48,6 +48,7 @@ export function BusContentModal({
   const [permission, setPermission] = useState(userPermission())
   const [changes, setChanges] = useState<string[]>([])
   const [changesWarning, setChangesWarning] = useState(false)
+  const [successWarning, setSuccessWarning] = useState(false)
 
   function userPermission() {
     if (mode === 'view') {
@@ -96,14 +97,23 @@ export function BusContentModal({
           passengersLimit
         })
       : BusService.updateEsconBus(bus.plate, { line, departureTime })
-    setState(state.map((i, pos) => (pos === index ? false : i)))
+    setChangesWarning(false)
+    setSuccessWarning(true)
+  }
+
+  function handleDelete() {
+    isHallBus(bus)
+      ? BusService.deleteHallBus(bus.plate)
+      : BusService.deleteEsconBus(bus.plate)
+    setChangesWarning(false)
+    setSuccessWarning(true)
   }
 
   useEffect(() => {
     hasChanged()
   }, [departureTime, driver, passengersLimit, line])
 
-  function handleCloseModal() {
+  const handleCloseModal = () => {
     setPermission(true)
     setDepartureTime(bus.departureTime)
     setDriver(isHallBus(bus) ? bus.driver : '')
@@ -111,6 +121,7 @@ export function BusContentModal({
     setLine(isHallBus(bus) ? 0 : bus.line)
     setChanges([])
     setChangesWarning(false)
+    setSuccessWarning(false)
     setState(state.map((i, pos) => (pos === index ? false : i)))
   }
 
@@ -217,7 +228,11 @@ export function BusContentModal({
                 </Button>
               </Grid>
               <Grid item>
-                <Button variant="contained" color="error">
+                <Button
+                  onClick={handleDelete}
+                  variant="contained"
+                  color="error"
+                >
                   Deletar
                 </Button>
               </Grid>
@@ -250,6 +265,13 @@ export function BusContentModal({
                   Confirmar
                 </Button>
               </>
+            )}
+            {successWarning && (
+              <WarningField
+                severity="success"
+                title="Mudanças realizadas com sucesso"
+                message="Volte para a página para observar as mudanças"
+              />
             )}
           </>
         )}
