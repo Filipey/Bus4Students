@@ -98,7 +98,9 @@ export function BusTable({ mode }: BusTableProps) {
   }, [])
 
   useEffect(() => {
-    const mergedBuses = [...esconBuses, ...hallBuses]
+    const mergedBuses = [...esconBuses, ...hallBuses].sort((x, y) =>
+      x.plate.localeCompare(y.plate)
+    )
     setAllBuses(mergedBuses)
     setOpenModal(Array(mergedBuses.length).fill(false))
   }, [hallBuses, esconBuses])
