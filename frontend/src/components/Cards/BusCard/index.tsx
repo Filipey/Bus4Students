@@ -6,7 +6,10 @@ function AdminBusCardActions() {
   return (
     <>
       <ActionButton text="Gerenciar Transportes" href="/admin/bus" />
-      <ActionButton text="Delegar Transporte a Estudante" href="/admin/bus" />
+      <ActionButton
+        text="Delegar Transporte a Estudante"
+        href="/admin/delegate-bus"
+      />
     </>
   )
 }
