@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import { UserContextProvider } from './hooks/userContext'
 
 import Admin from './pages/Admin'
-import { AdminBus } from './pages/Admin/Bus'
+import { AdminBus, DelegateBusPage } from './pages/Admin/Bus'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -25,6 +25,7 @@ export function Router() {
             <Route element={<UserMyBus />} path="user/bus/my" />
             <Route element={<Admin />} path="/admin" />
             <Route element={<AdminBus />} path="/admin/bus" />
+            <Route element={<DelegateBusPage />} path="/admin/delegate-bus" />
           </Routes>
         </UserContextProvider>
       </ThemeProvider>
