@@ -65,7 +65,7 @@ export function TableTitle({
         </Grid>
 
         <Grid item sx={{ pl: '40px', pt: '40px', pb: '20px' }}>
-          {isUserAdmin && (
+          {isUserAdmin && buttonTitle && (
             <Button
               onClick={buttonAction}
               color="info"
