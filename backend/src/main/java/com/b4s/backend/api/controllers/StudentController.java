@@ -95,6 +95,18 @@ public class StudentController {
         studentService.delegateNewBus(cpf, plate);
     }
 
+    @DeleteMapping("/{cpf}/bus")
+    @ApiOperation("Remove a Bus from Student")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Bus delete for student"),
+            @ApiResponse(code = 400, message = "Authorization Error"),
+            @ApiResponse(code = 404, message = "Student not found")
+    })
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBusFromStudent(@PathVariable String cpf, @RequestBody String plate) {
+        studentService.removeBusFromStudent(cpf, plate);
+    }
+
     @PutMapping("/{cpf}")
     @ApiOperation("Update a Student")
     @ApiResponses({

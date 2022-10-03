@@ -63,4 +63,8 @@ public interface StudentRepository extends JpaRepository<Student, String>{
     @Modifying
     void delegateNewBus(@Param("studentCpf")String studentCpf, @Param("busPlate") String busPlate) throws PSQLException;
 
+    @Query(nativeQuery = true, value = "DELETE FROM utiliza(placa,cpf) WHERE cpf = :cpf AND placa = :plate")
+    @Modifying
+    void removeBusFromStudent(@Param("cpf") String cpf, @Param("plate") String plate) throws PSQLException;
+
 }

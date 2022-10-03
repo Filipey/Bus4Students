@@ -97,4 +97,14 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
+    @Override
+    @Transactional
+    public void removeBusFromStudent(String cpf, String plate) {
+        try {
+            studentRepository.removeBusFromStudent(cpf, plate);
+        } catch (PSQLException e) {
+            throw new ObjectNotFoundException("Invalid params: CPF: " +cpf + " Plate: " +plate);
+        }
+    }
+
 }

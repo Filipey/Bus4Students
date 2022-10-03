@@ -20,4 +20,6 @@ public interface StudentService {
     void update(StudentDTO dto, String cpf);
 
     void delegateNewBus(String studentCpf, String busPlate);
+
+    void removeBusFromStudent(String cpf, String plate);
 }
