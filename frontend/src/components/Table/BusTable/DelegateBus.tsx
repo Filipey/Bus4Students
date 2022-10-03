@@ -14,6 +14,10 @@ import {
 import { useEffect, useState } from 'react'
 import { Student } from '../../../schemas'
 import { StudentService } from '../../../services/StudentService'
+import {
+  DelegateBusModal,
+  StudentDetailsModal
+} from '../../Modal/ContentHandlerModal/StudentModal'
 import { BreadCrumbStep, TableTitle } from '../Title'
 
 export function DelegateBus() {
@@ -23,7 +27,7 @@ export function DelegateBus() {
   const [openDetailsModal, setOpenDetailsModal] = useState<boolean[]>(
     Array(students.length).fill(false)
   )
-  const [openHandleModal, setOpenHandleModal] = useState<boolean[]>(
+  const [openDelegateModal, setOpenDelegateModal] = useState<boolean[]>(
     Array(students.length).fill(false)
   )
 
@@ -48,9 +52,9 @@ export function DelegateBus() {
     )
   }
 
-  const handleOpenHandleModal = (index: number) => {
-    setOpenHandleModal(
-      openHandleModal.map((i, pos) => (pos === index ? true : i))
+  const handleOpenDelegateModal = (index: number) => {
+    setOpenDelegateModal(
+      openDelegateModal.map((i, pos) => (pos === index ? true : i))
     )
   }
 
@@ -64,6 +68,11 @@ export function DelegateBus() {
   useEffect(() => {
     fetchData()
   }, [])
+
+  useEffect(() => {
+    setOpenDetailsModal(Array(students.length).fill(false))
+    setOpenDelegateModal(Array(students.length).fill(false))
+  }, [students])
 
   return (
     <TableTitle title="Delegar Ônibus" steps={steps}>
@@ -97,7 +106,7 @@ export function DelegateBus() {
                     </TableCell>
                     <TableCell align="center">
                       <IconButton
-                        onClick={() => handleOpenHandleModal(index)}
+                        onClick={() => handleOpenDelegateModal(index)}
                         id={index.toString()}
                       >
                         <Tooltip title="Delegar">
@@ -105,6 +114,18 @@ export function DelegateBus() {
                         </Tooltip>
                       </IconButton>
                     </TableCell>
+                    <StudentDetailsModal
+                      index={index}
+                      student={student}
+                      state={openDetailsModal}
+                      setState={setOpenDetailsModal}
+                    />
+                    <DelegateBusModal
+                      index={index}
+                      student={student}
+                      state={openDelegateModal}
+                      setState={setOpenDelegateModal}
+                    />
                   </TableRow>
                 ))}
             </TableBody>
