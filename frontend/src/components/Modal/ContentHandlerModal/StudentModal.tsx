@@ -1,5 +1,6 @@
 import {
   AccountBalance,
+  ArrowForward,
   Close,
   Commute,
   DirectionsBus,
@@ -141,30 +142,34 @@ export function StudentDetailsModal({
               {student.buses.length !== 0 ? (
                 student.buses.map(bus => (
                   <Fragment key={bus.plate}>
-                    <InfoTextField
-                      label="Placa"
-                      defaultValue={bus.plate}
-                      fullWidth={true}
-                      disabled={true}
-                      icon={<DirectionsBus />}
-                    />
-                    {isHallBus(bus) ? (
+                    <Grid
+                      container
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
                       <InfoTextField
-                        label="Fornecedor"
-                        defaultValue="Prefeitura"
-                        fullWidth={true}
+                        label="Placa"
+                        defaultValue={bus.plate}
                         disabled={true}
-                        icon={<AccountBalance />}
+                        icon={<DirectionsBus />}
                       />
-                    ) : (
-                      <InfoTextField
-                        label="Fornecedor"
-                        defaultValue="Escon"
-                        fullWidth={true}
-                        disabled={true}
-                        icon={<Commute />}
-                      />
-                    )}
+                      <ArrowForward htmlColor="#03a9f4" />
+                      {isHallBus(bus) ? (
+                        <InfoTextField
+                          label="Fornecedor"
+                          defaultValue="Prefeitura"
+                          disabled={true}
+                          icon={<AccountBalance />}
+                        />
+                      ) : (
+                        <InfoTextField
+                          label="Fornecedor"
+                          defaultValue="Escon"
+                          disabled={true}
+                          icon={<Commute />}
+                        />
+                      )}
+                    </Grid>
                   </Fragment>
                 ))
               ) : (

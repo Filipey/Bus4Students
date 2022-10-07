@@ -75,7 +75,7 @@ export function BusContentModal({
           ? ''
           : setChanges([...changes, 'Motorista'])
       }
-      if (passengersLimit !== passengersLimit) {
+      if (passengersLimit !== bus.passengersLimit) {
         changes.find(c => c === 'Limite de Passageiros')
           ? ''
           : setChanges([...changes, 'Limite de Passageiros'])
@@ -186,7 +186,11 @@ export function BusContentModal({
                   disabled={permission}
                   fullWidth={true}
                   icon={<Diversity1 />}
-                  onChange={e => setPassengersLimit(Number(e.target.value))}
+                  type="number"
+                  onChange={e => {
+                    e.preventDefault()
+                    setPassengersLimit(Number(e.target.value))
+                  }}
                 />
               </>
             ) : (

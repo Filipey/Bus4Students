@@ -9,6 +9,7 @@ interface InfoTextFieldProps {
   defaultValue?: string
   value?: string
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  type?: string
 }
 
 export function InfoTextField({
@@ -18,7 +19,8 @@ export function InfoTextField({
   disabled,
   defaultValue,
   value,
-  onChange
+  onChange,
+  type
 }: InfoTextFieldProps) {
   return (
     <TextField
@@ -29,6 +31,7 @@ export function InfoTextField({
       disabled={disabled}
       defaultValue={defaultValue}
       value={value}
+      type={type}
       onChange={onChange}
       InputProps={{
         startAdornment: <InputAdornment position="start">{icon}</InputAdornment>
