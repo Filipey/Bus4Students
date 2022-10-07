@@ -22,6 +22,7 @@ import { BreadCrumbStep, TableTitle } from '../Title'
 
 export function DelegateBus() {
   const [students, setStudents] = useState<Student[]>([])
+  const [atualStudents, setAtualStudents] = useState<Student[]>([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [openDetailsModal, setOpenDetailsModal] = useState<boolean[]>(
@@ -70,6 +71,7 @@ export function DelegateBus() {
   }, [])
 
   useEffect(() => {
+    setAtualStudents(students)
     setOpenDetailsModal(Array(students.length).fill(false))
     setOpenDelegateModal(Array(students.length).fill(false))
   }, [students])
@@ -88,7 +90,7 @@ export function DelegateBus() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {students
+              {atualStudents
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((student, index) => (
                   <TableRow key={student.cpf}>
