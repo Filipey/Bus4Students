@@ -33,6 +33,7 @@ export function SchoolTable({ mode }: SchoolTableProps) {
   const isUserAdmin = user.role === 'ADMIN'
 
   const [allSchools, setAllSchools] = useState<School[]>([])
+  const [atualSchools, setAtualSchools] = useState<School[]>([])
   const [openModal, setOpenModal] = useState<boolean[]>(
     Array(allSchools.length).fill(false)
   )
@@ -68,13 +69,17 @@ export function SchoolTable({ mode }: SchoolTableProps) {
 
   function fetchData() {
     if (isUserAdmin || (!isUserAdmin && mode === 'all')) {
-      SchoolService.getAllSchools().then(res => setAllSchools(res.data))
+      SchoolService.getAllSchools().then(res => {
+        setAllSchools(res.data)
+        setAtualSchools(res.data)
+      })
       return
     }
 
-    StudentService.getStudentByCpf(user.cpf).then(res =>
+    StudentService.getStudentByCpf(user.cpf).then(res => {
       setAllSchools(res.data.schools)
-    )
+      setAtualSchools(res.data.schools)
+    })
   }
 
   const handleRowsPerPageChange = (
@@ -94,11 +99,11 @@ export function SchoolTable({ mode }: SchoolTableProps) {
   ) => {
     if (value === null) {
       setOpenFilter(false)
-      setAllSchools(allSchools)
+      setAtualSchools(allSchools)
       return
     }
 
-    setAllSchools(allSchools.filter(school => school.name === value))
+    setAtualSchools(allSchools.filter(school => school.name === value))
   }
 
   useEffect(() => {
@@ -168,7 +173,7 @@ export function SchoolTable({ mode }: SchoolTableProps) {
                 </TableHead>
 
                 <TableBody>
-                  {allSchools
+                  {atualSchools
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((school, index) => (
                       <TableRow key={school.campus}>
