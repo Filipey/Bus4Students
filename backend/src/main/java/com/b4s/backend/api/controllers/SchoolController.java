@@ -76,7 +76,7 @@ public class SchoolController {
         return schoolService.getByCampus(campus);
     }
 
-    @GetMapping("/campus")
+    @GetMapping("/student/{campus}")
     @ApiOperation("Get students of a campus")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Ok"),
@@ -84,7 +84,7 @@ public class SchoolController {
             @ApiResponse(code = 404, message = "No Students in campus")
     })
     @ResponseStatus(HttpStatus.OK)
-    public List<Student> getStudentsFromCampus(@RequestBody String campus) {
+    public List<Student> getStudentsFromCampus(@PathVariable String campus) {
         return schoolService.getStudentsFromCampus(campus);
     }
 
@@ -130,7 +130,7 @@ public class SchoolController {
         schoolService.update(school, campus);
     }
 
-    @DeleteMapping("/campus")
+    @DeleteMapping("/campus/{campus}")
     @ApiOperation("Delete School by campus")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Deleted"),
@@ -138,7 +138,7 @@ public class SchoolController {
             @ApiResponse(code = 404, message = "School not found")
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteByCampus(@RequestBody String campus) {
+    public void deleteByCampus(@PathVariable String campus) {
         schoolService.deleteByCampus(campus);
     }
 
