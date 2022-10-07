@@ -83,19 +83,19 @@ public class StudentController {
         return studentService.getAllStudents();
     }
 
-    @PostMapping("{cpf}")
+    @PostMapping("/delegate/{cpf}/{plate}")
     @ApiOperation("Set a bus to a student")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "Succesful delegated"),
+            @ApiResponse(code = 201, message = "Successful delegated"),
             @ApiResponse(code = 400, message = "Authorization Error"),
             @ApiResponse(code = 404, message = "Student not found")
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delegateNewBus(@PathVariable String cpf, @RequestBody String plate) {
+    public void delegateNewBus(@PathVariable String cpf, @PathVariable String plate) {
         studentService.delegateNewBus(cpf, plate);
     }
 
-    @DeleteMapping("/{cpf}/bus")
+    @DeleteMapping("/delegate/{cpf}/{plate}")
     @ApiOperation("Remove a Bus from Student")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Bus delete for student"),
@@ -103,7 +103,7 @@ public class StudentController {
             @ApiResponse(code = 404, message = "Student not found")
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBusFromStudent(@PathVariable String cpf, @RequestBody String plate) {
+    public void deleteBusFromStudent(@PathVariable String cpf, @PathVariable String plate) {
         studentService.removeBusFromStudent(cpf, plate);
     }
 

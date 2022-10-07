@@ -12,7 +12,6 @@ import org.postgresql.util.PSQLException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -69,13 +68,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public void delegateNewBus(String cpf, String plate) {
-        try {
-            studentRepository.delegateNewBus(cpf, plate);
-            throw new SQLException();
-        } catch (SQLException e) {
-            e.getCause();
-            throw new ObjectAlreadyExistsException("Bus with plate " +plate+ " not found");
-        }
+        studentRepository.delegateNewBus(cpf, plate);
 
     }
 
