@@ -6,14 +6,13 @@ function StudentSchoolActions() {
   return (
     <>
       <ActionButton
-        text="Participar de Instituição de Ensino"
-        href="/user/school"
+        text="Consular Instituições de Ensino"
+        href="/user/school/all"
       />
       <ActionButton
-        text="Consultar Instituição de Ensino"
-        href="/user/school"
+        text="Minha Instituições de Ensino"
+        href="/user/school/my"
       />
-      <ActionButton text="Sair de Instituição de Ensino" href="/user/school" />
     </>
   )
 }
