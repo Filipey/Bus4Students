@@ -1,7 +1,7 @@
 package com.b4s.backend.api.controllers;
 
+import com.b4s.backend.api.dto.StudentResponseDTO;
 import com.b4s.backend.domain.School;
-import com.b4s.backend.domain.Student;
 import com.b4s.backend.services.SchoolService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -84,7 +84,7 @@ public class SchoolController {
             @ApiResponse(code = 404, message = "No Students in campus")
     })
     @ResponseStatus(HttpStatus.OK)
-    public List<Student> getStudentsFromCampus(@PathVariable String campus) {
+    public List<StudentResponseDTO> getStudentsFromCampus(@PathVariable String campus) {
         return schoolService.getStudentsFromCampus(campus);
     }
 

@@ -1,7 +1,7 @@
 package com.b4s.backend.repositories;
 
+import com.b4s.backend.api.dto.StudentResponseDTO;
 import com.b4s.backend.domain.School;
-import com.b4s.backend.domain.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -30,8 +30,8 @@ public interface SchoolRepository extends JpaRepository<School, String> {
     @Query(nativeQuery = true, value =
             "SELECT p.cpf, p.nome, p.endereco, e.comprovante_de_matricula " +
             "FROM pessoa p, estudante e " +
-                    "WHERE p.cpf IN (SELECT cpf FROM frequenta WHERE campus LIKE %:campus%)")
-    List<Student> getStudentsFromCampus(@Param("campus") String campus);
+                    "WHERE e.cpf IN (SELECT cpf FROM frequenta f WHERE f.campus LIKE %:campus%) AND p.cpf = e.cpf")
+    List<StudentResponseDTO> getStudentsFromCampus(@Param("campus") String campus);
 
     @Query(nativeQuery = true, value = "SELECT COUNT(*) FROM instituicao_de_ensino")
     Long getTotalSchools();
@@ -41,7 +41,7 @@ public interface SchoolRepository extends JpaRepository<School, String> {
             "FROM pessoa p, estudante e " +
             "WHERE p.cpf = (SELECT cpf FROM frequenta WHERE campus IN (SELECT campus FROM instituicao_de_ensino WHERE nome = :name))" +
                     "AND e.cpf = (SELECT cpf FROM frequenta WHERE campus IN (SELECT campus FROM instituicao_de_ensino WHERE nome = :name))")
-    List<Student> getStudentsFromSchool(@Param("name") String name);
+    List<StudentResponseDTO> getStudentsFromSchool(@Param("name") String name);
 
     @Query(nativeQuery = true, value =
             "INSERT INTO instituicao_de_ensino(nome, localizacao, periodo_letivo, campus) " +

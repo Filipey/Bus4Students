@@ -1,8 +1,7 @@
 package com.b4s.backend.services.impl;
 
-import com.b4s.backend.api.dto.StudentDTO;
+import com.b4s.backend.api.dto.StudentResponseDTO;
 import com.b4s.backend.domain.School;
-import com.b4s.backend.domain.Student;
 import com.b4s.backend.repositories.SchoolRepository;
 import com.b4s.backend.services.SchoolService;
 import org.springframework.stereotype.Service;
@@ -45,7 +44,7 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
-    public List<Student> getStudentsFromCampus(String campus) {
+    public List<StudentResponseDTO> getStudentsFromCampus(String campus) {
         return schoolRepository.getStudentsFromCampus(campus);
     }
 
@@ -55,7 +54,7 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
-    public List<Student> getStudentsFromSchool(String name) {
+    public List<StudentResponseDTO> getStudentsFromSchool(String name) {
         return schoolRepository.getStudentsFromSchool(name);
     }
 
