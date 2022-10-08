@@ -22,24 +22,12 @@ function AdminSchoolActions() {
   return (
     <>
       <ActionButton
-        text="Adicionar Instituição de Ensino"
+        text="Gerenciar Instituições de Ensino"
         href="/admin/school"
       />
       <ActionButton
-        text="Consultar Instituições de Ensino"
-        href="/admin/school"
-      />
-      <ActionButton
-        text="Deletar Instituições de Ensino"
-        href="/admin/school"
-      />
-      <ActionButton
-        text="Atualizar Instituição de Ensino"
-        href="/admin/school"
-      />
-      <ActionButton
-        text="Obter Estudante de Instituição de Ensino"
-        href="/admin/school"
+        text="Obter Estudantes de Instituição de Ensino"
+        href="/admin/school/students"
       />
     </>
   )

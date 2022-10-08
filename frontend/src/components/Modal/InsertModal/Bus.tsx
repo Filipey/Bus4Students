@@ -15,12 +15,12 @@ import { BusService } from '../../../services/BusService'
 import { InfoTextField } from '../../InfoTextField'
 import { WarningField } from '../../WarningField'
 
-interface insertBusModalProps {
+interface InsertBusModalProps {
   state: boolean
   setState(state: boolean): void
 }
 
-export function InsertBusModal({ state, setState }: insertBusModalProps) {
+export function InsertBusModal({ state, setState }: InsertBusModalProps) {
   const [provider, setProvider] = useState<string | null>(null)
   const [plate, setPlate] = useState('')
   const [departureTime, setDepartureTime] = useState('')
@@ -185,7 +185,7 @@ export function InsertBusModal({ state, setState }: insertBusModalProps) {
                 <Button
                   variant="contained"
                   color="error"
-                  onClick={() => console.log(badRequest, !submit)}
+                  onClick={handleCancel}
                 >
                   Cancelar
                 </Button>

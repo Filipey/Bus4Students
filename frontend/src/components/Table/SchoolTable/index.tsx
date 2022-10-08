@@ -21,6 +21,8 @@ import UserContext from '../../../hooks/userContext'
 import { School } from '../../../schemas'
 import { SchoolService } from '../../../services/SchoolService'
 import { StudentService } from '../../../services/StudentService'
+import { SchoolContentModal } from '../../Modal/ContentHandlerModal/SchoolModal'
+import { InsertSchoolModal } from '../../Modal/InsertModal/School'
 import { WarningField } from '../../WarningField'
 import { BreadCrumbStep, TableTitle } from '../Title'
 
@@ -37,14 +39,21 @@ export function SchoolTable({ mode }: SchoolTableProps) {
   const [openModal, setOpenModal] = useState<boolean[]>(
     Array(allSchools.length).fill(false)
   )
-  const [modalMode, setModalMode] = useState<'handle' | 'view'>('view')
+  const [modalMode, setModalMode] = useState<'view' | 'edit' | 'delete'>('view')
+  const [subtitle, setSubtitle] = useState('Todos os Campus')
   const [insertSchool, setInsertSchool] = useState(false)
   const [openFilter, setOpenFilter] = useState(false)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
 
-  const handleOpenModal = (newModalMode: 'handle' | 'view', index: number) => {
-    if (newModalMode === 'handle' && !isUserAdmin) {
+  const handleOpenModal = (
+    newModalMode: 'view' | 'edit' | 'delete',
+    index: number
+  ) => {
+    if (
+      (newModalMode === 'edit' || newModalMode === 'delete') &&
+      !isUserAdmin
+    ) {
       return
     }
 
@@ -71,14 +80,12 @@ export function SchoolTable({ mode }: SchoolTableProps) {
     if (isUserAdmin || (!isUserAdmin && mode === 'all')) {
       SchoolService.getAllSchools().then(res => {
         setAllSchools(res.data)
-        setAtualSchools(res.data)
       })
       return
     }
 
     StudentService.getStudentByCpf(user.cpf).then(res => {
       setAllSchools(res.data.schools)
-      setAtualSchools(res.data.schools)
     })
   }
 
@@ -100,15 +107,22 @@ export function SchoolTable({ mode }: SchoolTableProps) {
     if (value === null) {
       setOpenFilter(false)
       setAtualSchools(allSchools)
+      setSubtitle('Todos os Campus')
       return
     }
 
     setAtualSchools(allSchools.filter(school => school.name === value))
+    setSubtitle(`${value} - Campus`)
   }
 
   useEffect(() => {
     fetchData()
   }, [])
+
+  useEffect(() => {
+    setAtualSchools(allSchools)
+    setOpenModal(Array(allSchools.length).fill(false))
+  }, [allSchools])
 
   return (
     <TableTitle
@@ -117,6 +131,7 @@ export function SchoolTable({ mode }: SchoolTableProps) {
       buttonAction={() => setInsertSchool(true)}
       title="Instituição de Ensino"
     >
+      <InsertSchoolModal state={insertSchool} setState={setInsertSchool} />
       <Grid
         item
         sx={{ pl: '20px', pt: '24px' }}
@@ -139,7 +154,7 @@ export function SchoolTable({ mode }: SchoolTableProps) {
               }}
             >
               <Typography variant="h6" color="#0288d1">
-                Instituições de Ensino
+                {subtitle}
               </Typography>
               {!openFilter && (
                 <Tooltip title="Filtrar por nome">
@@ -193,7 +208,7 @@ export function SchoolTable({ mode }: SchoolTableProps) {
                         </TableCell>
                         <TableCell align="center">
                           <IconButton
-                            onClick={() => handleOpenModal('handle', index)}
+                            onClick={() => handleOpenModal('edit', index)}
                           >
                             <Tooltip
                               title={
@@ -207,7 +222,9 @@ export function SchoolTable({ mode }: SchoolTableProps) {
                           </IconButton>
                         </TableCell>
                         <TableCell align="center">
-                          <IconButton>
+                          <IconButton
+                            onClick={() => handleOpenModal('delete', index)}
+                          >
                             <Tooltip
                               title={
                                 isUserAdmin
@@ -219,6 +236,13 @@ export function SchoolTable({ mode }: SchoolTableProps) {
                             </Tooltip>
                           </IconButton>
                         </TableCell>
+                        <SchoolContentModal
+                          mode={modalMode}
+                          state={openModal}
+                          setState={setOpenModal}
+                          school={school}
+                          index={index}
+                        />
                       </TableRow>
                     ))}
                 </TableBody>

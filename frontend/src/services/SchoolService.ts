@@ -1,5 +1,5 @@
 import { Api } from '../providers'
-import { School, Student } from '../schemas'
+import { School, SchoolDTO, StudentResponseDTO } from '../schemas'
 
 const getAllSchools = () => Api.get<School[]>('/school')
 
@@ -13,7 +13,7 @@ const getSchoolByCampusLike = (campus: string) =>
   Api.get<School>(`/school/campus/${campus}`)
 
 const getStudentsByCampusLike = (campus: string) =>
-  Api.get<Student[]>(`/school/student/${campus}`)
+  Api.get<StudentResponseDTO[]>(`/school/student/${campus}`)
 
 const getTotalSchools = () => Api.get<number>('/school/total')
 
@@ -21,6 +21,8 @@ const createNewSchool = (school: School) => Api.post('/school', school)
 
 const insertStudentInSchool = (studentCpf: string, campus: string) =>
   Api.post(`/school/${studentCpf}`, campus)
+
+const insert = (school: SchoolDTO) => Api.post(`/school`, school)
 
 const updateSchool = (campus: string, school: School) =>
   Api.put(`/school/${campus}`, school)
@@ -40,6 +42,7 @@ export const SchoolService = {
   getTotalSchools,
   createNewSchool,
   insertStudentInSchool,
+  insert,
   updateSchool,
   deleteByCampus,
   deleteByName

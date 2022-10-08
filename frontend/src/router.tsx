@@ -4,7 +4,7 @@ import { UserContextProvider } from './hooks/userContext'
 
 import Admin from './pages/Admin'
 import { AdminBus, DelegateBusPage } from './pages/Admin/Bus'
-import { AdminSchool } from './pages/Admin/School'
+import { AdminSchool, AdminStudentsFromSchool } from './pages/Admin/School'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -31,6 +31,10 @@ export function Router() {
             <Route element={<AdminBus />} path="/admin/bus" />
             <Route element={<DelegateBusPage />} path="/admin/delegate-bus" />
             <Route element={<AdminSchool />} path="/admin/school" />
+            <Route
+              element={<AdminStudentsFromSchool />}
+              path="/admin/school/students"
+            />
           </Routes>
         </UserContextProvider>
       </ThemeProvider>
