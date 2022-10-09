@@ -5,11 +5,11 @@ import ActionButton from '../../ActionButton'
 function AdminStudentCardActions() {
   return (
     <>
-      <ActionButton text="Obter estudante" href="/admin/student" />
-      <ActionButton text="Listar estudantes" href="/admin/student" />
-      <ActionButton text="Atualizar estudante" href="/admin/student" />
-      <ActionButton text="Delegar transporte" href="/admin/student" />
-      <ActionButton text="Gerar Carteira de Transporte" href="/admin/student" />
+      <ActionButton text="Gerenciar Estudantes" href="/admin/student" />
+      <ActionButton
+        text="Gerar Carteira de Transporte"
+        href="/admin/student/pass"
+      />
     </>
   )
 }
@@ -17,9 +17,11 @@ function AdminStudentCardActions() {
 function StudentCardActions() {
   return (
     <>
-      <ActionButton text="Consultar meus dados" href="/user/me" />
-      <ActionButton text="Atualizar Informações" href="/user/me" />
-      <ActionButton text="Consultar Carteira de Transporte" href="/user/me" />
+      <ActionButton text="Gerenciar meus Dados" href="/user/me" />
+      <ActionButton
+        text="Consultar Carteira de Transporte"
+        href="/user/me/pass"
+      />
     </>
   )
 }

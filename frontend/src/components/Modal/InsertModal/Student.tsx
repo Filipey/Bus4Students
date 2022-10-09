@@ -1,76 +1,62 @@
-import {
-  Close,
-  Domain,
-  LocationOn,
-  School as SchoolIcon
-} from '@material-ui/icons'
+import { Close, Home, Person, Security } from '@material-ui/icons'
+import { Numbers } from '@mui/icons-material'
 import {
   Button,
   Dialog,
   DialogContent,
   DialogTitle,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
   Grid,
-  IconButton,
-  Radio,
-  RadioGroup
+  IconButton
 } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { SchoolService } from '../../../services/SchoolService'
+import { StudentService } from '../../../services/StudentService'
 import { InfoTextField } from '../../InfoTextField'
 import { WarningField } from '../../WarningField'
 
-interface InsertSchoolModalProps {
+interface InsertStudentModalProps {
   state: boolean
   setState(state: boolean): void
 }
 
-export function InsertSchoolModal({ state, setState }: InsertSchoolModalProps) {
+export function InsertStudentModal({
+  state,
+  setState
+}: InsertStudentModalProps) {
   const [name, setName] = useState('')
-  const [campus, setCampus] = useState('')
-  const [active, setActive] = useState(false)
-  const [location, setLocation] = useState('')
+  const [cpf, setCpf] = useState('')
+  const [address, setAddress] = useState('')
+  const [enrollment, setEnrollment] = useState('')
   const [submit, setSubmit] = useState(false)
   const [badRequest, setBadRequest] = useState(false)
 
+  const isAvailableToSubmit = () =>
+    name !== '' && cpf.length === 11 && address !== '' && enrollment !== ''
+
   const handleSubmit = () => {
-    SchoolService.insert({ name, campus, active, location }).then(res =>
-      res.status !== 201 ? setBadRequest(true) : null
+    StudentService.insertNewStudent({ name, cpf, address, enrollment }).then(
+      res => (res.status !== 201 ? setBadRequest(true) : null)
     )
     setSubmit(true)
   }
 
-  useEffect(() => {
-    areFieldsAcceptable()
-  }, [name, campus, active, location])
-
   const handleCancel = () => {
-    setSubmit(false)
-    setBadRequest(false)
     setName('')
-    setCampus('')
-    setActive(false)
-    setLocation('')
+    setCpf('')
+    setAddress('')
+    setEnrollment('')
+    setSubmit(false)
     setState(false)
   }
 
-  const areFieldsAcceptable = () => {
-    return name !== '' && campus !== '' && location !== ''
-  }
-
-  const handleChangeActive = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = (e.target as HTMLInputElement).value
-
-    setActive(value === 'Sim' ? true : false)
-  }
+  useEffect(() => {
+    isAvailableToSubmit()
+  }, [name, cpf, address, enrollment])
 
   return (
     <Dialog open={state} scroll="body" fullWidth>
       <DialogTitle color="#03a9f4">
         <Grid container alignItems="center" justifyContent="space-between">
-          <Grid item>Nova Instituição de Ensino</Grid>
+          <Grid item>Novo Estudante</Grid>
           <Grid item>
             <IconButton sx={{ size: 'small' }} onClick={handleCancel}>
               <Close />
@@ -84,43 +70,38 @@ export function InsertSchoolModal({ state, setState }: InsertSchoolModalProps) {
             label="Nome"
             defaultValue={name}
             fullWidth={true}
-            icon={<SchoolIcon />}
+            icon={<Person />}
             onChange={e => setName(e.target.value)}
           />
           <InfoTextField
-            label="Campus"
-            defaultValue={campus}
+            label="CPF"
+            defaultValue={cpf}
             fullWidth={true}
-            icon={<Domain />}
-            onChange={e => setCampus(e.target.value)}
+            icon={<Security />}
+            onChange={e => setCpf(e.target.value)}
           />
           <InfoTextField
-            label="Localização"
-            defaultValue={campus}
-            fullWidth={true}
-            icon={<LocationOn />}
-            onChange={e => setLocation(e.target.value)}
+            label="Endereço"
+            defaultValue={address}
+            fullWidth
+            icon={<Home />}
+            onChange={e => setAddress(e.target.value)}
           />
-          <FormControl>
-            <FormLabel>Período Letivo</FormLabel>
-            <RadioGroup
-              row
-              onChange={handleChangeActive}
-              value={active ? 'Sim' : 'Não'}
-            >
-              <FormControlLabel value="Sim" control={<Radio />} label="Sim" />
-              <FormControlLabel value="Não" control={<Radio />} label="Não" />
-            </RadioGroup>
-          </FormControl>
+          <InfoTextField
+            label="Matrícula"
+            defaultValue={enrollment}
+            fullWidth
+            icon={<Numbers />}
+            onChange={e => setEnrollment(e.target.value)}
+          />
           {submit && (
             <WarningField
-              severity="success"
               title="Cadastro realizado com sucesso!"
-              message={`O Campus ${campus} da Instituição ${name} foi realizado com sucesso!`}
+              severity="success"
+              message={`O estudante ${name} de CPF ${cpf} foi cadastrado com sucesso!`}
             />
           )}
-
-          {!submit && areFieldsAcceptable() && (
+          {!submit && isAvailableToSubmit() && (
             <Grid
               container
               sx={{ pt: 2 }}
@@ -152,7 +133,7 @@ export function InsertSchoolModal({ state, setState }: InsertSchoolModalProps) {
             <WarningField
               title="Entrada de dados inválida!"
               severity="error"
-              message={`Este campus desta instituição já consta na base de dados! Verifique a integridade das entradas.`}
+              message={`Este CPF já consta na base de dados! Verifique a integridade das entradas.`}
             />
           )}
         </Grid>

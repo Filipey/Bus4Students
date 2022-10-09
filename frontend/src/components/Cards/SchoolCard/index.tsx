@@ -10,7 +10,7 @@ function StudentSchoolActions() {
         href="/user/school/all"
       />
       <ActionButton
-        text="Minha Instituições de Ensino"
+        text="Minhas Instituições de Ensino"
         href="/user/school/my"
       />
     </>
@@ -26,6 +26,10 @@ function AdminSchoolActions() {
       />
       <ActionButton
         text="Obter Estudantes de Instituição de Ensino"
+        href="/admin/school/students/all"
+      />
+      <ActionButton
+        text="Gerenciar Estudantes em Instituições de Ensino"
         href="/admin/school/students"
       />
     </>

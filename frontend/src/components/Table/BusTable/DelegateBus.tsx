@@ -14,10 +14,8 @@ import {
 import { useEffect, useState } from 'react'
 import { Student } from '../../../schemas'
 import { StudentService } from '../../../services/StudentService'
-import {
-  DelegateBusModal,
-  StudentDetailsModal
-} from '../../Modal/ContentHandlerModal/StudentModal'
+import { DelegateBusModal } from '../../Modal/ContentHandlerModal/BusModal'
+import { StudentDetailsModal } from '../../Modal/ContentHandlerModal/StudentModal'
 import { BreadCrumbStep, TableTitle } from '../Title'
 
 export function DelegateBus() {

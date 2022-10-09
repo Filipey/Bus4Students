@@ -4,7 +4,9 @@ import {
   Close,
   Commute,
   DirectionsBus,
-  Schedule
+  Person,
+  Schedule,
+  Security
 } from '@material-ui/icons'
 import { Diversity1, Tag } from '@mui/icons-material'
 import {
@@ -12,15 +14,21 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
   Grid,
-  IconButton
+  IconButton,
+  Radio,
+  RadioGroup
 } from '@mui/material'
 import { useContext, useEffect, useState } from 'react'
 import UserContext from '../../../hooks/userContext'
-import { EsconBus, HallBus } from '../../../schemas'
+import { EsconBus, HallBus, Student } from '../../../schemas'
 import { BusService } from '../../../services/BusService'
 import { isEsconBus, isHallBus } from '../../../utils/getType'
 import { InfoTextField } from '../../InfoTextField'
+import { BusTransferList } from '../../TransferList'
 import { WarningField } from '../../WarningField'
 
 interface BusContentProps {
@@ -297,6 +305,85 @@ export function BusContentModal({
             )}
           </>
         )}
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+interface DelegateBusModalProps {
+  student: Student
+  state: boolean[]
+  setState(state: boolean[]): void
+  index: number
+}
+
+export function DelegateBusModal({
+  student,
+  index,
+  state,
+  setState
+}: DelegateBusModalProps) {
+  const [option, setOption] = useState('Prefeitura')
+
+  const handleCloseModal = () => {
+    setState(state.map((i, pos) => (pos === index ? false : i)))
+  }
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setOption((event.target as HTMLInputElement).value)
+  }
+
+  return (
+    <Dialog
+      style={{ width: '100%', height: '100%' }}
+      open={state[index]}
+      fullWidth
+    >
+      <DialogTitle color="#03a9f4">
+        <Grid container justifyContent="space-between" alignItems="center">
+          <Grid item>Estudante {student.cpf}</Grid>
+          <Grid item>
+            <IconButton onClick={handleCloseModal} size="small">
+              <Close />
+            </IconButton>
+          </Grid>
+        </Grid>
+      </DialogTitle>
+      <DialogContent>
+        <Grid container justifyContent="space-between" alignItems="center">
+          <Grid container flexDirection="column" item sx={{ pt: 2 }}>
+            <InfoTextField
+              label="Nome"
+              defaultValue={student.name}
+              disabled={true}
+              fullWidth={true}
+              icon={<Person />}
+            />
+            <InfoTextField
+              label="CPF"
+              defaultValue={student.cpf}
+              disabled={true}
+              fullWidth={true}
+              icon={<Security />}
+            />
+            <FormControl>
+              <FormLabel>Fornecedor </FormLabel>
+              <RadioGroup onChange={handleChange} value={option} row>
+                <FormControlLabel
+                  label="Prefeitura"
+                  control={<Radio />}
+                  value="Prefeitura"
+                />
+                <FormControlLabel
+                  label="Escon"
+                  control={<Radio />}
+                  value="Escon"
+                />
+              </RadioGroup>
+            </FormControl>
+            <BusTransferList student={student} option={option} />
+          </Grid>
+        </Grid>
       </DialogContent>
     </Dialog>
   )

@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { DashboardContainer } from '../../components/DashboardContainer'
 import { SchoolTable } from '../../components/Table/SchoolTable'
+import { DelegateSchool } from '../../components/Table/SchoolTable/DelegateSchool'
 import { StudentsFromSchool } from '../../components/Table/SchoolTable/StudentsFromSchool'
 import UserContext from '../../hooks/userContext'
 import { validateSession } from '../../utils/userSession'
@@ -32,6 +33,21 @@ export function AdminStudentsFromSchool() {
   return (
     <DashboardContainer>
       <StudentsFromSchool />
+    </DashboardContainer>
+  )
+}
+
+export function AdminDelegateSchool() {
+  const navigate = useNavigate()
+  const { setUser } = useContext(UserContext)
+
+  useEffect(() => {
+    validateSession(navigate, setUser, 'ADMIN')
+  }, [])
+
+  return (
+    <DashboardContainer>
+      <DelegateSchool />
     </DashboardContainer>
   )
 }
