@@ -1,6 +1,8 @@
 import { Api } from '../providers'
 import { School, SchoolDTO, StudentResponseDTO } from '../schemas'
 
+const config = { headers: { 'Content-Type': 'text/plain' } }
+
 const getAllSchools = () => Api.get<School[]>('/school')
 
 const getActiveSchools = () => Api.get<School[]>('/school/active')
@@ -20,7 +22,9 @@ const getTotalSchools = () => Api.get<number>('/school/total')
 const createNewSchool = (school: School) => Api.post('/school', school)
 
 const insertStudentInSchool = (studentCpf: string, campus: string) =>
-  Api.post(`/school/${studentCpf}`, campus)
+  Api.post(`/school/student/${studentCpf}`, campus, {
+    headers: { 'Content-Type': 'text/plain' }
+  })
 
 const insert = (school: SchoolDTO) => Api.post(`/school`, school)
 
@@ -31,6 +35,15 @@ const deleteByCampus = (campus: string) =>
   Api.delete(`/school/campus/${campus}`)
 
 const deleteByName = (name: string) => Api.delete(`/school/${name}`)
+
+const removeStudentFromCampus = (studentCpf: string, campus: string) => {
+  Api.delete(`/school/student/${studentCpf}`, {
+    data: campus,
+    headers: {
+      'Content-Type': 'text/plain'
+    }
+  })
+}
 
 export const SchoolService = {
   getAllSchools,
@@ -45,5 +58,6 @@ export const SchoolService = {
   insert,
   updateSchool,
   deleteByCampus,
-  deleteByName
+  deleteByName,
+  removeStudentFromCampus
 }

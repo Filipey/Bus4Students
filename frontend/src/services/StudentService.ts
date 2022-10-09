@@ -1,7 +1,7 @@
 import { Api } from '../providers'
 import { Student, StudentDTO } from '../schemas'
 
-const config = { headers: { 'Content-Type': 'application/json' } }
+export const config = { headers: { 'Content-Type': 'text' } }
 
 const getAllStudents = () => Api.get<Student[]>('/student')
 
@@ -19,6 +19,9 @@ const delegateBus = (cpf: string, plate: string) =>
 const removeBusFromStudent = (cpf: string, plate: string) =>
   Api.delete(`/student/delegate/${cpf}/${plate}`)
 
+const updateStudent = (cpf: string, student: StudentDTO) =>
+  Api.put(`/student/${cpf}`, student)
+
 export const StudentService = {
   getAllStudents,
   getStudentByCpf,
@@ -26,5 +29,6 @@ export const StudentService = {
   getTotalStudents,
   insertNewStudent,
   delegateBus,
-  removeBusFromStudent
+  removeBusFromStudent,
+  updateStudent
 }
