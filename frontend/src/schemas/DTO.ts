@@ -1,5 +1,5 @@
 export interface StudentPassDTO {
-  expirationDate: string
+  expirationDate: Date
   schoolName: string
   studentCpf: string
 }

@@ -30,7 +30,7 @@ export interface Student {
 }
 
 export interface StudentPass {
-  expirationDate: string
+  expirationDate: Date
   id: number
   owner: Student
   schoolName: string

@@ -19,6 +19,8 @@ const getStudentsByCampusLike = (campus: string) =>
 
 const getTotalSchools = () => Api.get<number>('/school/total')
 
+const getAllSchoolsNames = () => Api.get<string[]>('/school/names')
+
 const createNewSchool = (school: School) => Api.post('/school', school)
 
 const insertStudentInSchool = (studentCpf: string, campus: string) =>
@@ -53,6 +55,7 @@ export const SchoolService = {
   getSchoolByCampusLike,
   getStudentsByCampusLike,
   getTotalSchools,
+  getAllSchoolsNames,
   createNewSchool,
   insertStudentInSchool,
   insert,
