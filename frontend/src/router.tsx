@@ -9,6 +9,10 @@ import {
   AdminSchool,
   AdminStudentsFromSchool
 } from './pages/Admin/School'
+import {
+  AdminAllStudentPass,
+  AdminStudentPass
+} from './pages/Admin/StudentPass'
 import { AdminStudents } from './pages/Admin/Students'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -45,6 +49,11 @@ export function Router() {
               path="/admin/school/students"
             />
             <Route element={<AdminStudents />} path="/admin/student" />
+            <Route element={<AdminStudentPass />} path="/admin/student/pass" />
+            <Route
+              element={<AdminAllStudentPass />}
+              path="/admin/student/pass/all"
+            />
           </Routes>
         </UserContextProvider>
       </ThemeProvider>

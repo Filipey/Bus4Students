@@ -6,8 +6,8 @@ interface InfoTextFieldProps {
   icon: JSX.Element
   fullWidth?: boolean
   disabled?: boolean
-  defaultValue?: string
-  value?: string
+  defaultValue?: string | Date
+  value?: string | Date
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   type?: string
 }

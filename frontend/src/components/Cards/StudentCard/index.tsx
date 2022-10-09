@@ -10,6 +10,10 @@ function AdminStudentCardActions() {
         text="Gerar Carteira de Transporte"
         href="/admin/student/pass"
       />
+      <ActionButton
+        text="Consultar Carteiras de Transporte"
+        href="/admin/student/pass/all"
+      />
     </>
   )
 }

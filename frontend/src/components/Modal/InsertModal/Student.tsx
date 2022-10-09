@@ -1,5 +1,5 @@
-import { Close, Home, Person, Security } from '@material-ui/icons'
-import { Numbers } from '@mui/icons-material'
+import { Close, Home, Person, Security, VpnKey } from '@material-ui/icons'
+import { Key, Numbers } from '@mui/icons-material'
 import {
   Button,
   Dialog,
@@ -10,6 +10,7 @@ import {
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { StudentService } from '../../../services/StudentService'
+import { UserService } from '../../../services/UserService'
 import { InfoTextField } from '../../InfoTextField'
 import { WarningField } from '../../WarningField'
 
@@ -26,16 +27,25 @@ export function InsertStudentModal({
   const [cpf, setCpf] = useState('')
   const [address, setAddress] = useState('')
   const [enrollment, setEnrollment] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordConfirmation, setPasswordConfirmation] = useState('')
   const [submit, setSubmit] = useState(false)
   const [badRequest, setBadRequest] = useState(false)
 
   const isAvailableToSubmit = () =>
-    name !== '' && cpf.length === 11 && address !== '' && enrollment !== ''
+    name !== '' &&
+    cpf.length === 11 &&
+    address !== '' &&
+    enrollment !== '' &&
+    password !== '' &&
+    passwordConfirmation !== '' &&
+    password === passwordConfirmation
 
   const handleSubmit = () => {
     StudentService.insertNewStudent({ name, cpf, address, enrollment }).then(
       res => (res.status !== 201 ? setBadRequest(true) : null)
     )
+    UserService.insertNewUser({ cpf, password, isAdmin: false })
     setSubmit(true)
   }
 
@@ -93,6 +103,20 @@ export function InsertStudentModal({
             fullWidth
             icon={<Numbers />}
             onChange={e => setEnrollment(e.target.value)}
+          />
+          <InfoTextField
+            label="Senha"
+            defaultValue={password}
+            fullWidth
+            icon={<Key />}
+            onChange={e => setPassword(e.target.value)}
+          />
+          <InfoTextField
+            label="Confirmação de Senha"
+            defaultValue={enrollment}
+            fullWidth
+            icon={<VpnKey />}
+            onChange={e => setPasswordConfirmation(e.target.value)}
           />
           {submit && (
             <WarningField
