@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @AllArgsConstructor
@@ -19,7 +19,7 @@ public class StudentPass {
     private Long id;
 
     @Column(name = "data_validade")
-    private Date expirationDate;
+    private LocalDate expirationDate;
 
     @Column(name = "instituicao_ensino")
     private String schoolName;

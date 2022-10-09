@@ -5,14 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentPassDTO {
 
-    private Date expirationDate;
+    private LocalDate expirationDate;
     private String schoolName;
     private String studentCpf;
 }

@@ -96,6 +96,14 @@ public class SchoolController {
         return schoolService.getTotalSchools();
     }
 
+    @GetMapping("/names")
+    @ApiOperation("Get all Schools names in Database")
+    @ApiResponse(code = 200, message = "Ok")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String> getAllSchoolsNames() {
+        return schoolService.getAllSchoolsNames();
+    }
+
     @PostMapping
     @ApiOperation("Create new School")
     @ApiResponses({

@@ -1,6 +1,7 @@
 package com.b4s.backend.services.impl;
 
 import com.b4s.backend.api.dto.StudentPassDTO;
+import com.b4s.backend.api.dto.StudentResponseDTO;
 import com.b4s.backend.api.exception.ObjectNotFoundException;
 import com.b4s.backend.domain.StudentPass;
 import com.b4s.backend.repositories.StudentPassRepository;
@@ -8,6 +9,7 @@ import com.b4s.backend.services.StudentPassService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -22,6 +24,9 @@ public class StudentPassServiceImpl implements StudentPassService {
     @Override
     @Transactional
     public void insert(StudentPassDTO studentPassDTO, String adminCpf) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+
         studentPassRepository.insert(studentPassDTO, adminCpf);
     }
 
@@ -49,5 +54,10 @@ public class StudentPassServiceImpl implements StudentPassService {
     @Transactional
     public void update(StudentPassDTO studentPassDTO, Long id) {
         studentPassRepository.update(studentPassDTO, id);
+    }
+
+    @Override
+    public List<StudentResponseDTO> getStudentsWithNoPass() {
+        return studentPassRepository.getStudentsWithNoPass();
     }
 }

@@ -36,6 +36,9 @@ public interface SchoolRepository extends JpaRepository<School, String> {
     @Query(nativeQuery = true, value = "SELECT COUNT(*) FROM instituicao_de_ensino")
     Long getTotalSchools();
 
+    @Query(nativeQuery = true, value = "SELECT DISTINCT nome FROM instituicao_de_ensino")
+    List<String> getAllSchoolsName();
+
     @Query(nativeQuery = true, value =
             "SELECT p.cpf, p.nome, p.endereco, e.comprovante_de_matricula " +
             "FROM pessoa p, estudante e " +

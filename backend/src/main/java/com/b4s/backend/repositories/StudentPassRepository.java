@@ -1,6 +1,7 @@
 package com.b4s.backend.repositories;
 
 import com.b4s.backend.api.dto.StudentPassDTO;
+import com.b4s.backend.api.dto.StudentResponseDTO;
 import com.b4s.backend.domain.StudentPass;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -43,4 +44,8 @@ public interface StudentPassRepository extends JpaRepository<StudentPass, Long> 
 
     @Query(nativeQuery = true, value = "SELECT * FROM carteira_de_estudante ORDER BY id")
     List<StudentPass> getAll();
+
+    @Query(nativeQuery = true, value = "SELECT p.nome, p.cpf, p.endereco, e.comprovante_de_matricula " +
+            "FROM pessoa p, estudante e WHERE p.cpf = e.cpf AND e.cpf NOT IN (SELECT cpf FROM carteira_de_estudante)")
+    List<StudentResponseDTO> getStudentsWithNoPass();
 }

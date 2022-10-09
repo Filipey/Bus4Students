@@ -2,6 +2,7 @@ package com.b4s.backend.services;
 
 
 import com.b4s.backend.api.dto.StudentPassDTO;
+import com.b4s.backend.api.dto.StudentResponseDTO;
 import com.b4s.backend.domain.StudentPass;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface StudentPassService {
     void update(StudentPassDTO studentPassDTO, Long id);
 
     List<StudentPass> getAll();
+
+    List<StudentResponseDTO> getStudentsWithNoPass();
 }

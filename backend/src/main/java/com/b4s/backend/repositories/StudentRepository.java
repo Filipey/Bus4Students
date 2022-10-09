@@ -66,5 +66,4 @@ public interface StudentRepository extends JpaRepository<Student, String>{
     @Query(nativeQuery = true, value = "DELETE FROM utiliza WHERE cpf = :cpf AND placa = :plate")
     @Modifying
     void removeBusFromStudent(@Param("cpf") String cpf, @Param("plate") String plate) throws PSQLException;
-
 }

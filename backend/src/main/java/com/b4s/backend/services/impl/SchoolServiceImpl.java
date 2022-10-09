@@ -54,6 +54,11 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
+    public List<String> getAllSchoolsNames() {
+        return schoolRepository.getAllSchoolsName();
+    }
+
+    @Override
     public List<StudentResponseDTO> getStudentsFromSchool(String name) {
         return schoolRepository.getStudentsFromSchool(name);
     }

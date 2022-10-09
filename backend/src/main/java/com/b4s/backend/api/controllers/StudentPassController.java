@@ -1,6 +1,7 @@
 package com.b4s.backend.api.controllers;
 
 import com.b4s.backend.api.dto.StudentPassDTO;
+import com.b4s.backend.api.dto.StudentResponseDTO;
 import com.b4s.backend.domain.StudentPass;
 import com.b4s.backend.services.impl.StudentPassServiceImpl;
 import io.swagger.annotations.ApiOperation;
@@ -43,6 +44,18 @@ public class StudentPassController {
     @ResponseStatus(HttpStatus.OK)
     public StudentPass getByOwner(@PathVariable String studentCpf) {
         return studentPassServiceImpl.getByOwner(studentCpf);
+    }
+
+    @GetMapping("/students")
+    @ApiOperation("Get a Student pass by his owner")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Ok"),
+            @ApiResponse(code = 404, message = "There is no owner"),
+            @ApiResponse(code = 400, message = "Authorization error")
+    })
+    @ResponseStatus(HttpStatus.OK)
+    public List<StudentResponseDTO> getStudentsWithNoPass() {
+        return studentPassServiceImpl.getStudentsWithNoPass();
     }
 
     @PostMapping("/{adminCpf}")

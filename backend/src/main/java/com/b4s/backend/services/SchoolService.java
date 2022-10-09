@@ -21,6 +21,8 @@ public interface SchoolService {
 
     Long getTotalSchools();
 
+    List<String> getAllSchoolsNames();
+
     List<StudentResponseDTO> getStudentsFromSchool(String name);
 
     void insert(School school);
