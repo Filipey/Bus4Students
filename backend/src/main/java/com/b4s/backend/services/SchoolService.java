@@ -27,6 +27,8 @@ public interface SchoolService {
 
     void insertStudentInSchool(String studentCpf, String campus);
 
+    void removeStudentFromCampus(String studentCpf, String campus);
+
     void update(School school, String campus);
 
     void deleteByCampus(String campus);

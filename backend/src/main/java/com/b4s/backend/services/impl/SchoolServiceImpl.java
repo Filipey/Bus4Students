@@ -72,6 +72,12 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Override
     @Transactional
+    public void removeStudentFromCampus(String studentCpf, String campus) {
+        schoolRepository.removeStudentFromCampus(studentCpf, campus);
+    }
+
+    @Override
+    @Transactional
     public void update(School school, String campus) {
         schoolRepository.update(school, campus);
     }

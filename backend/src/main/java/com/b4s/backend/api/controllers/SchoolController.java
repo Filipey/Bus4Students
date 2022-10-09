@@ -107,7 +107,7 @@ public class SchoolController {
         schoolService.insert(school);
     }
 
-    @PostMapping("/{studentCpf}")
+    @PostMapping("/student/{studentCpf}")
     @ApiOperation("Insert a Student into a School")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Created"),
@@ -152,5 +152,17 @@ public class SchoolController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteByName(@PathVariable String name) {
         schoolService.deleteByName(name);
+    }
+
+    @DeleteMapping("/student/{studentCpf}")
+    @ApiOperation("Remove Student from School")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Deleted"),
+            @ApiResponse(code = 400, message = "Authorization Error"),
+            @ApiResponse(code = 404, message = "School not found")
+    })
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeStudentFromCampus(@PathVariable String studentCpf, @RequestBody String campus) {
+        schoolService.removeStudentFromCampus(studentCpf, campus);
     }
 }

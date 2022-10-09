@@ -54,6 +54,10 @@ public interface SchoolRepository extends JpaRepository<School, String> {
     @Modifying
     void insertStudentInSchool(@Param("studentCpf") String studentCpf, @Param("campus") String campus);
 
+    @Query(nativeQuery = true, value = "DELETE FROM frequenta WHERE campus = :campus AND cpf = :studentCpf")
+    @Modifying
+    void removeStudentFromCampus(@Param("studentCpf") String studentCpf, @Param("campus") String campus);
+
     @Query(nativeQuery = true, value =
             "UPDATE instituicao_de_ensino " +
                     "SET nome = :#{#school.name}, " +
