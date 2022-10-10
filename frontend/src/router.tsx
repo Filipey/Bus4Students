@@ -14,6 +14,7 @@ import {
   AdminStudentPass
 } from './pages/Admin/StudentPass'
 import { AdminStudents } from './pages/Admin/Students'
+import { AdminTickets } from './pages/Admin/Ticket'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -57,6 +58,7 @@ export function Router() {
               element={<AdminAllStudentPass />}
               path="/admin/student/pass/all"
             />
+            <Route element={<AdminTickets />} path="/admin/ticket" />
           </Routes>
         </UserContextProvider>
       </ThemeProvider>

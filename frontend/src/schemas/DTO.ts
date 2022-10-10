@@ -36,6 +36,13 @@ export interface SchoolDTO {
   name: string
 }
 
+export interface TicketDTO {
+  expirationDate: Date
+  sink: string
+  source: string
+  value: number
+}
+
 export interface PersonResponseDTO {
   cpf: string
   name: string

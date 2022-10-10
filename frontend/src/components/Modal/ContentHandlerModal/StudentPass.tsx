@@ -216,7 +216,7 @@ export function StudentPassDetailsModal({
     >
       <DialogTitle color="#03a9f4">
         <Grid container justifyContent="space-between" alignItems="center">
-          <Grid item>Nova Carteira de Estudante</Grid>
+          <Grid item>Carteira de estudante {pass.id}</Grid>
           <Grid item>
             <IconButton onClick={handleCloseModal} size="small">
               <Close />

@@ -17,12 +17,8 @@ function StudentTicketCardActions() {
 function AdminTicketCardActions() {
   return (
     <>
-      <ActionButton text="Inserir novos Vales" href="/admin/ticket" />
-      <ActionButton text="Atualizar Vales" href="/admin/ticket" />
-      <ActionButton text="Deletar Vales" href="/admin/ticket" />
+      <ActionButton text="Gerenciar Vales" href="/admin/ticket" />
       <ActionButton text="Delegar Vales a Estudantes" href="/admin/ticket" />
-      <ActionButton text="Consultar Vales" href="/admin/ticket" />
-      <ActionButton text="Consultar Vales disponíveis" href="/admin/ticket" />
     </>
   )
 }

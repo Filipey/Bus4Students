@@ -37,7 +37,7 @@ export interface StudentPass {
 }
 
 export interface Ticket {
-  expirationDate: string
+  expirationDate: Date
   id: number
   sink: string
   source: string
