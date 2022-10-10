@@ -51,11 +51,7 @@ export function BusTable({ mode }: BusTableProps) {
     setOpenModal(openModal.map((i, pos) => (pos === index ? true : i)))
   }
 
-  const userAdivce =
-    (!isUserAdmin && (hallBuses === undefined || esconBuses === undefined)) ||
-    (!isUserAdmin &&
-      (hallBuses.length === 0 || esconBuses.length === 0) &&
-      mode === 'my')
+  const userAdvice = !isUserAdmin && allBuses.length === 0 && mode === 'my'
 
   const steps: BreadCrumbStep[] = [
     {
@@ -118,7 +114,7 @@ export function BusTable({ mode }: BusTableProps) {
         sx={{ pl: '20px', pt: '24px' }}
         style={{ width: '100%', height: '100%' }}
       >
-        {userAdivce ? (
+        {userAdvice ? (
           <WarningField
             severity="warning"
             title="Ausencia de Onibus"
