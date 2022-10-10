@@ -57,4 +57,9 @@ public class TicketServiceImpl implements TicketService {
     public void delegateTicket(String studentCpf, String admCpf, int id) {
         ticketRepository.delegateTicket(studentCpf, admCpf, id);
     }
+
+    @Override
+    public List<Ticket> getTicketsByOwner(String studentCpf) {
+        return ticketRepository.getTicketsByOwner(studentCpf);
+    }
 }

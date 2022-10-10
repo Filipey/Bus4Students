@@ -5,11 +5,7 @@ import ActionButton from '../../ActionButton'
 function StudentTicketCardActions() {
   return (
     <>
-      <ActionButton text="Consultar quantidade atual" href="/user/ticket" />
-      <ActionButton
-        text="Consultar quantidade total recebida"
-        href="/user/ticket"
-      />
+      <ActionButton text="Vales Recebidos" href="/user/ticket" />
     </>
   )
 }
@@ -18,7 +14,10 @@ function AdminTicketCardActions() {
   return (
     <>
       <ActionButton text="Gerenciar Vales" href="/admin/ticket" />
-      <ActionButton text="Delegar Vales a Estudantes" href="/admin/ticket" />
+      <ActionButton
+        text="Delegar Vales a Estudantes"
+        href="/admin/delegate-ticket"
+      />
     </>
   )
 }

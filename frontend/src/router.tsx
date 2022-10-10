@@ -14,7 +14,7 @@ import {
   AdminStudentPass
 } from './pages/Admin/StudentPass'
 import { AdminStudents } from './pages/Admin/Students'
-import { AdminTickets } from './pages/Admin/Ticket'
+import { AdminDelegateTicket, AdminTickets } from './pages/Admin/Ticket'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -22,6 +22,7 @@ import User from './pages/User'
 import { UserAllBus, UserMyBus } from './pages/User/Bus'
 import { UserAllSchool, UserMySchool } from './pages/User/School'
 import { UserMyData, UserMyPass } from './pages/User/Student'
+import { UserHandleTickets } from './pages/User/Ticket'
 import { theme } from './utils/theme'
 
 export function Router() {
@@ -59,6 +60,11 @@ export function Router() {
               path="/admin/student/pass/all"
             />
             <Route element={<AdminTickets />} path="/admin/ticket" />
+            <Route
+              element={<AdminDelegateTicket />}
+              path="/admin/delegate-ticket"
+            />
+            <Route element={<UserHandleTickets />} path="/user/ticket" />
           </Routes>
         </UserContextProvider>
       </ThemeProvider>

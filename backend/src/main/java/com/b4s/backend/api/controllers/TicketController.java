@@ -43,6 +43,17 @@ public class TicketController {
         return ticketService.getAllDisponibleTickets();
     }
 
+    @GetMapping("/owner/{studentCpf}")
+    @ApiOperation("Get Tickets from Student")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Ok"),
+            @ApiResponse(code = 404, message = "Student not foun")
+    })
+    @ResponseStatus(HttpStatus.OK)
+    public List<Ticket> getTicketsByOwner(@PathVariable String studentCpf) {
+        return ticketService.getTicketsByOwner(studentCpf);
+    }
+
     @PostMapping
     @ApiOperation("Insert a new Ticket")
     @ApiResponses({

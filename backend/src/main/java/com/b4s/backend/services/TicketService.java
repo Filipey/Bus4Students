@@ -17,4 +17,6 @@ public interface TicketService {
     void delegateTicket(String studentCpf, String admCpf, int id);
 
     List<Ticket> getAllDisponibleTickets();
+
+    List<Ticket> getTicketsByOwner(String studentCpf);
 }

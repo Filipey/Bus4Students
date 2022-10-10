@@ -12,10 +12,11 @@ import {
   ListItemText
 } from '@mui/material'
 import { ReactNode, useEffect, useState } from 'react'
-import { Student } from '../../schemas'
-import { SchoolService } from '../../services/SchoolService'
+import { User } from '../../hooks/userContext'
+import { Student, Ticket } from '../../schemas'
+import { TicketService } from '../../services/TicketService'
 
-interface SchoolTransferListProps {
+interface TicketsTransferListProps {
   student: Student
 }
 
@@ -31,34 +32,31 @@ function intersection(x: string[], y: string[]) {
   return x.filter(value => y.indexOf(value) !== -1)
 }
 
-export function SchoolsTransferList({ student }: SchoolTransferListProps) {
-  const [allCampus, setAllCampus] = useState<string[]>([])
+export function TicketsTransferList({ student }: TicketsTransferListProps) {
+  const user: User = JSON.parse(window.sessionStorage.getItem('USER'))
+  const [tickets, setTickets] = useState<Ticket[]>([])
+  const [allTickets, setAllTickets] = useState<string[]>([])
   const [checked, setChecked] = useState([])
-  const [studentCampus, setStudentCampus] = useState(
-    student.schools.map(school => school.campus)
-  )
-  const [initialStudentCampus] = useState(studentCampus)
-  const [originalStudentCampus] = useState(
-    student.schools.map(school => school.campus)
-  )
+  const [studentTickets, setStudentTickets] = useState([])
   const [error, setError] = useState(false)
 
-  const leftChecked = intersection(checked, allCampus)
-  const rightChecked = intersection(checked, studentCampus)
+  const leftChecked = intersection(checked, allTickets)
+  const rightChecked = intersection(checked, studentTickets)
 
   function fetchData() {
-    SchoolService.getAllSchools().then(res => {
-      const allCampuses = res.data.map(school => school.campus)
-      const availableCampuses = allCampuses.filter(
-        campus => !studentCampus.includes(campus)
-      )
-      setAllCampus(availableCampuses)
-    })
+    TicketService.getAllDisponibleTicket().then(res => setTickets(res.data))
   }
 
   useEffect(() => {
     fetchData()
   }, [])
+
+  useEffect(() => {
+    const formattedTickets = tickets.map(
+      ticket => `${ticket.id}/${ticket.source}/${ticket.sink}`
+    )
+    setAllTickets(formattedTickets)
+  }, [tickets])
 
   const handleToggle = (value: string) => {
     const currentIndex = checked.indexOf(value)
@@ -79,41 +77,21 @@ export function SchoolsTransferList({ student }: SchoolTransferListProps) {
   }
 
   const handleCheckStudentCampus = () => {
-    setStudentCampus(studentCampus.concat(leftChecked))
-    setAllCampus(not(allCampus, leftChecked))
+    setStudentTickets(studentTickets.concat(leftChecked))
+    setAllTickets(not(allTickets, leftChecked))
     setChecked(not(checked, leftChecked))
   }
 
-  const handleCheckAllCampuses = () => {
-    setAllCampus(allCampus.concat(rightChecked))
-    setStudentCampus(not(studentCampus, rightChecked))
+  const handleCheckallTicketses = () => {
+    setAllTickets(allTickets.concat(rightChecked))
+    setStudentTickets(not(studentTickets, rightChecked))
     setChecked(not(checked, rightChecked))
   }
 
   const handleSubmitChanges = () => {
-    const originalCampus = student.schools.map(school => school.campus)
-    const removedCampuses = originalCampus.map(campus =>
-      originalCampus.includes(campus) && !studentCampus.includes(campus)
-        ? campus
-        : null
-    )
-    const addedCampuses = studentCampus.map(campus =>
-      !originalCampus.includes(campus) && studentCampus.includes(campus)
-        ? campus
-        : null
-    )
-    if (initialStudentCampus.length > 0) {
-      initialStudentCampus.map(campus => {
-        if (addedCampuses.includes(campus)) {
-          SchoolService.insertStudentInSchool(student.cpf, campus)
-        } else if (removedCampuses.includes(campus)) {
-          SchoolService.removeStudentFromCampus(student.cpf, campus)
-        }
-      })
-      return
-    }
-    addedCampuses.map(campus => {
-      SchoolService.insertStudentInSchool(student.cpf, campus)
+    studentTickets.map(ticket => {
+      const [id, origin, source] = ticket.split('/')
+      TicketService.delegateTicket(id, student.cpf, user.cpf)
     })
   }
 
@@ -188,7 +166,7 @@ export function SchoolsTransferList({ student }: SchoolTransferListProps) {
       justifyContent="center"
       alignItems="center"
     >
-      <Grid item>{customList('Opções', allCampus)}</Grid>
+      <Grid item>{customList('Opções', allTickets)}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
           <Button
@@ -204,16 +182,15 @@ export function SchoolsTransferList({ student }: SchoolTransferListProps) {
             sx={{ my: 0.5 }}
             variant="outlined"
             size="small"
-            onClick={handleCheckAllCampuses}
+            onClick={handleCheckallTicketses}
             disabled={rightChecked.length === 0}
           >
             &lt;
           </Button>
         </Grid>
       </Grid>
-      <Grid item>{customList('Selecionados', studentCampus)}</Grid>
-      {JSON.stringify(originalStudentCampus) !==
-        JSON.stringify(studentCampus) && (
+      <Grid item>{customList('Selecionados', studentTickets)}</Grid>
+      {studentTickets.length > 0 && (
         <Grid
           container
           sx={{ pt: 2 }}

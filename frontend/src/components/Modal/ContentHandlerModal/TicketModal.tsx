@@ -1,4 +1,4 @@
-import { Close, LocationCity } from '@material-ui/icons'
+import { Close, LocationCity, Person, Security } from '@material-ui/icons'
 import { CalendarMonth, PriceChange } from '@mui/icons-material'
 import {
   Button,
@@ -9,9 +9,11 @@ import {
   IconButton
 } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { Ticket } from '../../../schemas'
+import { Student, Ticket } from '../../../schemas'
 import { TicketService } from '../../../services/TicketService'
+import { formatCpf } from '../../../utils/formatter'
 import { InfoTextField } from '../../InfoTextField'
+import { TicketsTransferList } from '../../TransferList/TicketsTransferList'
 import { WarningField } from '../../WarningField'
 
 interface TicketModalProps {
@@ -216,6 +218,64 @@ export function TicketModal({
                 severity="success"
               />
             )}
+          </Grid>
+        </Grid>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+interface DelegateTicketModalProps {
+  student: Student
+  state: boolean[]
+  setState(state: boolean[]): void
+  index: number
+}
+
+export function DelegateTicketModal({
+  student,
+  state,
+  setState,
+  index
+}: DelegateTicketModalProps) {
+  const handleCloseModal = () => {
+    setState(state.map((i, pos) => (pos === index ? false : i)))
+  }
+
+  return (
+    <Dialog
+      style={{ width: '100%', height: '100%' }}
+      open={state[index]}
+      fullWidth
+    >
+      <DialogTitle color="#03a9f4">
+        <Grid container justifyContent="space-between" alignItems="center">
+          <Grid item>Estudante {formatCpf(student.cpf)}</Grid>
+          <Grid item>
+            <IconButton onClick={handleCloseModal} size="small">
+              <Close />
+            </IconButton>
+          </Grid>
+        </Grid>
+      </DialogTitle>
+      <DialogContent>
+        <Grid container justifyContent="space-between" alignItems="center">
+          <Grid container flexDirection="column" item sx={{ pt: 2 }}>
+            <InfoTextField
+              label="Nome"
+              defaultValue={student.name}
+              disabled={true}
+              fullWidth={true}
+              icon={<Person />}
+            />
+            <InfoTextField
+              label="CPF"
+              defaultValue={formatCpf(student.cpf)}
+              disabled={true}
+              fullWidth={true}
+              icon={<Security />}
+            />
+            <TicketsTransferList student={student} />
           </Grid>
         </Grid>
       </DialogContent>
