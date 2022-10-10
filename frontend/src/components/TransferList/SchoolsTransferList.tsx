@@ -143,7 +143,7 @@ export function SchoolsTransferList({ student }: SchoolTransferListProps) {
       <Divider />
       <List
         sx={{
-          width: 220,
+          width: 200,
           height: 250,
           bgcolor: 'background.paper',
           overflow: 'auto'

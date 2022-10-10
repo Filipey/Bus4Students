@@ -50,6 +50,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     @Query(nativeQuery = true, value =
             "SELECT v.data_de_validade, v.valor, v.id, v.origem, v.destino " +
             "FROM vale_transporte v " +
-            "WHERE v.id in (SELECT id FROM recebe WHERE cpf = :studentCpf")
+            "WHERE v.id in (SELECT id FROM recebe WHERE cpf = :studentCpf)")
     List<Ticket> getTicketsByOwner(@Param("studentCpf") String studentCpf);
 }
