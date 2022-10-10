@@ -41,7 +41,7 @@ public interface StudentPassRepository extends JpaRepository<StudentPass, Long> 
             "SELECT * FROM carteira_de_estudante " +
             "WHERE cpf = :studentCpf")
     Optional<StudentPass> getByOwner(@Param("studentCpf") String studentCpf);
-
+    
     @Query(nativeQuery = true, value = "SELECT * FROM carteira_de_estudante ORDER BY id")
     List<StudentPass> getAll();
 

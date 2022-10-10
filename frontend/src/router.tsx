@@ -20,6 +20,7 @@ import Register from './pages/Register'
 import User from './pages/User'
 import { UserAllBus, UserMyBus } from './pages/User/Bus'
 import { UserAllSchool, UserMySchool } from './pages/User/School'
+import { UserMyData, UserMyPass } from './pages/User/Student'
 import { theme } from './utils/theme'
 
 export function Router() {
@@ -36,6 +37,8 @@ export function Router() {
             <Route element={<UserMyBus />} path="user/bus/my" />
             <Route element={<UserAllSchool />} path="user/school/all" />
             <Route element={<UserMySchool />} path="user/school/my" />
+            <Route element={<UserMyData />} path="user/me" />
+            <Route element={<UserMyPass />} path="user/me/pass" />
             <Route element={<Admin />} path="/admin" />
             <Route element={<AdminBus />} path="/admin/bus" />
             <Route element={<DelegateBusPage />} path="/admin/delegate-bus" />
