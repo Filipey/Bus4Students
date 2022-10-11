@@ -112,7 +112,7 @@ export function BusTransferList({ option, student }: BusTransferListProps) {
     const addedBuses = studentBuses.map(bus =>
       !originalBuses.includes(bus) && studentBuses.includes(bus) ? bus : null
     )
-    initialStudentBuses.map(plate => {
+    studentBuses.map(plate => {
       if (addedBuses.includes(plate)) {
         StudentService.delegateBus(student.cpf, plate)
       } else if (removedBuses.includes(plate)) {

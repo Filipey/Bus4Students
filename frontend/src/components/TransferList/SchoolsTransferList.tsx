@@ -14,6 +14,7 @@ import {
 import { ReactNode, useEffect, useState } from 'react'
 import { Student } from '../../schemas'
 import { SchoolService } from '../../services/SchoolService'
+import { WarningField } from '../WarningField'
 
 interface SchoolTransferListProps {
   student: Student
@@ -42,6 +43,7 @@ export function SchoolsTransferList({ student }: SchoolTransferListProps) {
     student.schools.map(school => school.campus)
   )
   const [error, setError] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const leftChecked = intersection(checked, allCampus)
   const rightChecked = intersection(checked, studentCampus)
@@ -110,10 +112,12 @@ export function SchoolsTransferList({ student }: SchoolTransferListProps) {
           SchoolService.removeStudentFromCampus(student.cpf, campus)
         }
       })
+      setSuccess(true)
       return
     }
     addedCampuses.map(campus => {
       SchoolService.insertStudentInSchool(student.cpf, campus)
+      setSuccess(true)
     })
   }
 
@@ -236,6 +240,13 @@ export function SchoolsTransferList({ student }: SchoolTransferListProps) {
             </Button>
           </Grid>
         </Grid>
+      )}
+      {success && (
+        <WarningField
+          title="Recurso alocado com sucesso!"
+          message={`O aluno ${student.name} teve suas Instituições de Ensino ajustadas com sucesso!`}
+          severity="success"
+        />
       )}
     </Grid>
   )

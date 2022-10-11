@@ -141,7 +141,10 @@ export function StudentDetailsModal({
                         disabled={true}
                         icon={<DirectionsBus />}
                       />
-                      <ArrowForward htmlColor="#03a9f4" />
+                      <ArrowForward
+                        style={{ width: '20px' }}
+                        htmlColor="#03a9f4"
+                      />
                       {isHallBus(bus) ? (
                         <InfoTextField
                           label="Fornecedor"

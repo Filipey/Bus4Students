@@ -15,6 +15,7 @@ import { ReactNode, useEffect, useState } from 'react'
 import { User } from '../../hooks/userContext'
 import { Student, Ticket } from '../../schemas'
 import { TicketService } from '../../services/TicketService'
+import { WarningField } from '../WarningField'
 
 interface TicketsTransferListProps {
   student: Student
@@ -39,6 +40,7 @@ export function TicketsTransferList({ student }: TicketsTransferListProps) {
   const [checked, setChecked] = useState([])
   const [studentTickets, setStudentTickets] = useState([])
   const [error, setError] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const leftChecked = intersection(checked, allTickets)
   const rightChecked = intersection(checked, studentTickets)
@@ -93,6 +95,7 @@ export function TicketsTransferList({ student }: TicketsTransferListProps) {
       const [id, origin, source] = ticket.split('/')
       TicketService.delegateTicket(id, student.cpf, user.cpf)
     })
+    setSuccess(true)
   }
 
   const customList = (title: ReactNode, items: string[]) => (
@@ -213,6 +216,13 @@ export function TicketsTransferList({ student }: TicketsTransferListProps) {
             </Button>
           </Grid>
         </Grid>
+      )}
+      {success && (
+        <WarningField
+          title="Vales Alocados com sucesso!"
+          severity="success"
+          message={`Os vales foram alocados para o estudante ${student.name}`}
+        />
       )}
     </Grid>
   )
