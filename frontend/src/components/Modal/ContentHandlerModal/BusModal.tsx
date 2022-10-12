@@ -26,6 +26,7 @@ import { useContext, useEffect, useState } from 'react'
 import UserContext from '../../../hooks/userContext'
 import { EsconBus, HallBus, Student } from '../../../schemas'
 import { BusService } from '../../../services/BusService'
+import { formatCpf } from '../../../utils/formatter'
 import { isEsconBus, isHallBus } from '../../../utils/getType'
 import { InfoTextField } from '../../InfoTextField'
 import { BusTransferList } from '../../TransferList'
@@ -341,7 +342,7 @@ export function DelegateBusModal({
     >
       <DialogTitle color="#03a9f4">
         <Grid container justifyContent="space-between" alignItems="center">
-          <Grid item>Estudante {student.cpf}</Grid>
+          <Grid item>Estudante {formatCpf(student.cpf)}</Grid>
           <Grid item>
             <IconButton onClick={handleCloseModal} size="small">
               <Close />

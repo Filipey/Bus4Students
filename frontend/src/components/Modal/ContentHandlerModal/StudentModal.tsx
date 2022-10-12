@@ -23,6 +23,7 @@ import {
 import { Fragment, useEffect, useState } from 'react'
 import { Student } from '../../../schemas'
 import { StudentService } from '../../../services/StudentService'
+import { formatCpf } from '../../../utils/formatter'
 import { isHallBus } from '../../../utils/getType'
 import { InfoAccorion } from '../../Accordion'
 import { InfoTextField } from '../../InfoTextField'
@@ -54,7 +55,7 @@ export function StudentDetailsModal({
     >
       <DialogTitle color="#03a9f4">
         <Grid container justifyContent="space-between" alignItems="center">
-          <Grid item>Estudante {student.cpf}</Grid>
+          <Grid item>Estudante {formatCpf(student.cpf)}</Grid>
           <Grid item>
             <IconButton onClick={handleCloseModal} size="small">
               <Close />

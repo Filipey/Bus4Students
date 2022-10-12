@@ -14,6 +14,7 @@ import {
 import { useEffect, useState } from 'react'
 import { Student } from '../../../schemas'
 import { StudentService } from '../../../services/StudentService'
+import { formatCpf } from '../../../utils/formatter'
 import { DelegateBusModal } from '../../Modal/ContentHandlerModal/BusModal'
 import { StudentDetailsModal } from '../../Modal/ContentHandlerModal/StudentModal'
 import { BreadCrumbStep, TableTitle } from '../Title'
@@ -92,7 +93,9 @@ export function DelegateBus() {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((student, index) => (
                   <TableRow key={student.cpf}>
-                    <TableCell align="center">{student.cpf}</TableCell>
+                    <TableCell align="center">
+                      {formatCpf(student.cpf)}
+                    </TableCell>
                     <TableCell align="center">{student.name}</TableCell>
                     <TableCell align="center">
                       <IconButton

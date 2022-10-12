@@ -15,6 +15,7 @@ import { ReactNode, useEffect, useState } from 'react'
 import { Student } from '../../schemas'
 import { BusService } from '../../services/BusService'
 import { StudentService } from '../../services/StudentService'
+import { WarningField } from '../WarningField'
 
 interface BusTransferListProps {
   option: string
@@ -40,9 +41,8 @@ export function BusTransferList({ option, student }: BusTransferListProps) {
   const [studentBuses, setStudentBuses] = useState(
     student.buses.map(bus => bus.plate)
   )
-  const [initialStudentBuses] = useState(studentBuses)
   const [originalStudentBuses] = useState(student.buses.map(bus => bus.plate))
-  const [error, setError] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const atualBuses = option === 'Prefeitura' ? hallBuses : esconBuses
 
@@ -119,6 +119,7 @@ export function BusTransferList({ option, student }: BusTransferListProps) {
         StudentService.removeBusFromStudent(student.cpf, plate)
       }
     })
+    setSuccess(true)
   }
 
   const customList = (title: ReactNode, items: string[]) => (
@@ -240,6 +241,13 @@ export function BusTransferList({ option, student }: BusTransferListProps) {
             </Button>
           </Grid>
         </Grid>
+      )}
+      {success && (
+        <WarningField
+          title="Recurso alocado com sucesso!"
+          message={`O aluno ${student.name} teve seus Transportes ajustadas com sucesso!`}
+          severity="success"
+        />
       )}
     </Grid>
   )
