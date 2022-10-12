@@ -16,7 +16,7 @@
 
 
 ## Motivação
-Atualmente, segundo as leis brasileiras, municípios que não ofertam cursos superiores, sejam públicos ou privados, devem ofertar aos estudantes de seu município algum auxílio transporte para cidades próximas que ofertam este tipo de serviço. De acordo com testemunhos de estudantes da [UFOP](https://ufop.br) que sofrem deste problema, nós, criadores, analisamos a metodologia atual abordada como depreciada, tendo em vista que os processos são realizados todos de maneira física e manual, gerando uma grande inconssitencia de dados e um fluxo assícrono de informação quase inexistente. Com base nestes testemunhos, foi proposto a criação de um Dashboard, visando a computação de grande parte do processo e melhoria de pontos cruciais do mesmo. Esta ferramenta busca facilitar a alocação de recursos e a comunicação assíncrona entre estudantes e administradores do sistema, garantindo e facilitando acesso à informação e recursos para ambos atores.
+Atualmente, segundo as leis brasileiras, municípios que não ofertam cursos superiores, sejam públicos ou privados, devem ofertar aos estudantes de seu município algum auxílio transporte para cidades próximas que ofertam este tipo de serviço. De acordo com testemunhos de estudantes da [UFOP](https://ufop.br) que sofrem deste problema, nós, criadores, analisamos a metodologia atual abordada como depreciada, tendo em vista que os processos são realizados todos de maneira física e manual, gerando uma grande inconsistência de dados e um fluxo assícrono de informação quase inexistente. Com base nestes testemunhos, foi proposto a criação de um Dashboard, visando a computação de grande parte do processo e melhoria de pontos cruciais do mesmo. Esta ferramenta busca facilitar a alocação de recursos e a comunicação assíncrona entre estudantes e administradores do sistema, garantindo e facilitando acesso à informação e recursos para ambos atores.
 
 
 ## Sobre
@@ -104,7 +104,7 @@ MIT License ©
 
 ## Autores
  
-<div >
+<div style="justifyContent: space-between">
   <a href="https://github.com/Filipey">
     <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/85424389?s=400&u=417925037da99d2637c3714599830ae00c07c99a&v=4" width="100px;" alt=""/>
     <sub><b> Flipe Moura</b></sub>
