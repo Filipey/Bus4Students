@@ -2,11 +2,11 @@
 
 
 ## Participantes
-[Bruno Rabello Monteiro - Orientador]((https://github.com/bruno-monteiro)) <br/>
-[Euler Horta Marinho - Orientador]() <br/>
-[Filipe Augusto Santos de Moura - Aluno]((https://github.com/Filipey)) <br/>
-[Diogo Leite Lucas - Aluno]((https://github.com/diogoleite87)) <br/>
-[Vitor Marques dos Santos - Aluno]((https://github.com/MarqueVitor)) <br/>
+[Bruno Rabello Monteiro - Orientador](https://github.com/bruno-monteiro) <br/>
+[Euler Horta Marinho - Orientador](https://www.escavador.com/sobre/4998090/euler-horta-marinho) <br/>
+[Filipe Augusto Santos de Moura - Aluno](https://github.com/Filipey) <br/>
+[Diogo Leite Lucas - Aluno](https://github.com/diogoleite87) <br/>
+[Vitor Marques dos Santos - Aluno](https://github.com/MarqueVitor) <br/>
 
 
 ## Objetivos
@@ -104,7 +104,7 @@ MIT License ©
 
 ## Autores
  
-<div style="float:left;margin:0 10px 10px 0" markdown="1">
+<div >
   <a href="https://github.com/Filipey">
     <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/85424389?s=400&u=417925037da99d2637c3714599830ae00c07c99a&v=4" width="100px;" alt=""/>
     <sub><b> Flipe Moura</b></sub>
